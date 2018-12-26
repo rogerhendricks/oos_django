@@ -24,6 +24,15 @@ var/
 .installed.cfg
 *.egg
 
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
@@ -50,9 +59,16 @@ coverage.xml
 
 # Django stuff:
 *.log
+venv/
+client_oos/clients/static/
+
+\.vscode/
+
+client_oos/client_oos/
 
 # Sphinx documentation
 docs/_build/
 
 # PyBuilder
 target/
+

@@ -1,0 +1,5 @@
+Activate venv
+
+source /Volumes/BIG/Documents/coding_python/django_0.1/venv/bin/activate
+
+path to main directory

@@ -1,0 +1,22 @@
+{% extends 'clients/base.html' %}
+
+{% block content %}
+<div>
+	<h3>Client Details</h3>
+	<h4>{{client.first_name}} {{client.last_name}}</h4>
+	<label style="color: #7B1FA2; font-weight: bold;">Record Number: </label> {{client.record_number}}
+	<br>
+	<label style="color: #7B1FA2; font-weight: bold;">First Name: </label> {{client.first_name}}
+	<br>
+	<label style="color: #7B1FA2; font-weight: bold;">Last Name: </label> {{client.last_name}}
+	<br> 
+	<label style="color: #7B1FA2; font-weight: bold;">Date of Birth: </label> {{client.dob}}
+<br>
+</div>
+<div>
+<a class="btn btn-secondary" href="#">Services</a>
+<a class="btn btn-secondary" href="{% url 'client:client_update' client.pk %}">Update</a>
+<a class="btn btn-danger" href="{% url 'client:client_delete' client.pk %}">Delete</a> 
+</div>
+
+{% endblock %}

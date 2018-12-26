@@ -1,0 +1,30 @@
+ {% for field in form if field.widget.input_type != 'hidden' %}
+        <p>
+            {{ field.label }}
+            {{ field }}
+            <span>
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </span>
+        </p>
+        {% endfor %}
+
+
+
+
+    <div>
+        <p>Are you sure you want to delete "{{object.first_name}} {{ object.last_name }}" ?</p>
+    </div>
+    <div class="row"> 
+        <div class="column">
+            <form method="post">{% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Confirm">
+            </form>
+        </div>
+        <div class="column">
+            <a class="btn btn-primary" href="{% url 'client:index' %}">Cancel</a>
+        </div>
+    </div>
