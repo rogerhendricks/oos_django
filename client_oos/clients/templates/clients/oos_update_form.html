@@ -1,0 +1,10 @@
+{% extends 'clients/base.html' %}
+
+{% block content %}
+    <h1>Update service</h1>
+    <form method="POST" class="update-form">
+        {% csrf_token %}
+       {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update service</button>
+    </form>
+{% endblock %}
