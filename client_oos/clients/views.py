@@ -1,19 +1,18 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from .models import Client, Oos
 from django.shortcuts import redirect
-from .forms import SearchForm, ClientForm
+from .forms import SearchForm, ClientForm, OosForm
 from django.contrib import messages
-from django.urls import	reverse_lazy
-from django.db.models import Q 
-
-
+from django.urls import	reverse_lazy, reverse
+from django.db.models import Q
+from django.utils import timezone
 
 # Clients
 class ClientView(ListView):
     template_name = 'clients/index.html'
     context_object_name = 'all_clients'
-    
+
     def get_queryset(self):
         return Client.objects.all()
 
@@ -38,65 +37,63 @@ class ClientDelete(DeleteView):
     model = Client
     success_url = reverse_lazy('client:index')
 
+
 class SearchList(ListView):
-	template_name = 'clients/client_search.html'
-	model = Client 
-	context_object_name = 'results_list'
+    template_name = 'clients/client_search.html'
+    model = Client
+    context_object_name = 'results_list'
 
-	def get_queryset(self):
-		search = self.request.GET.get('search')
-		queryset = Client.objects.filter(Q(last_name__icontains = search)|Q(first_name__icontains = search))
-		return queryset
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        queryset = Client.objects.filter(Q(last_name__icontains=search)|Q(first_name__icontains=search)|Q(record_number__icontains=search))
+        return queryset
 
 
-# Services 		
+# Services
 
 class OosView(ListView):
     template_name = 'clients/services_index.html'
     context_object_name = 'all_services'
 
-    def get_queryset(self):
-        return Oos.objects.all()
+    def get_queryset(self, *args, **kwargs):
+        queryset = Oos.objects.filter(client=self.kwargs.get('pk')).order_by('-oos_date')
+        return queryset
 
-		
+
 class OosDetailView(DetailView):
-    template_name = ''
-    model = Oos 
+    template_name = 'clients/oos_detail.html'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk'))
+        return queryset
 
 
 class OosCreate(CreateView):
-    model = Oos 
-    feilds = []
+    template_name = 'clients/oos_create.html'
+    model = Oos
+    fields = ['client','content', 'oos_type', 'batt_volt', 'oos_date' ]
 
 
 class OosUpdateView(UpdateView):
-    model = Oos 
-    fields = []
-    template_name_suffix = ''
+    model = Oos
+    fields = ['content', 'oos_type', 'batt_volt', 'oos_date']
+    template_name_suffix = '_update_form'
+    #success_url = reverse_lazy('client:service_detail')
 
 
 class OosDelete(DeleteView):
-    model = Oos 
-    success_url = reverse_lazy("")
+    model = Oos
+    def get_queryset(self, *args, **kwargs):
+        queryset = Oos.objects.get(client=self.kwargs.get('pk'), id=self.kwargs.get('oos_id'))
+        return queryset
+    success_url = reverse_lazy('client:service')
 
 
+#search services from OosListView
 class OosSearchList():
     template_name = ''
-    model = Oos 
+    model = Oos
     context_object_name = ''
 
     def get_queryset(self):
         pass
-
-		
-
-
-
-
-
-
-
-
-
-
-

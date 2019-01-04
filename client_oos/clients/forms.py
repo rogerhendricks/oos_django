@@ -11,7 +11,7 @@ class ClientForm(forms.ModelForm):
 class OosForm(forms.ModelForm):
    class Meta:
         model = Oos 
-        fields = ('content', 'oos_type', 'batt_volt')
+        fields = ('content', 'oos_type', 'batt_volt', 'oos_date')
 
 
 class SearchForm(forms.ModelForm):

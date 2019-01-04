@@ -1,15 +1,22 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
-        <h2>Client Index</h2>
+        <h2>Services Index</h2>
+        <div>
+                <a class="btn btn-secondary" href="#">New Service</a>
+                <a class="btn btn-secondary" href="#">Back to Client</a>
+        </div>
+
         {% for service in all_services %}
         <div class="card">
                 <div class="card-body">
-                <h3>{{service.type}}</h3><br>
-                <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label>{{service.oos_date}} 
+                <h3>{{service.oos_type}}</h3><br>
+                <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
+                <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
+
+                <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}
                 <div>
-                        <a class="btn btn-secondary" href="{% url 'client:client_detail' client.pk %}">Details</a>
-                        <a class="btn btn-secondary" href="#">Services</a> 
+                        <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a> 
                 </div>
                 </div>
         </div>
