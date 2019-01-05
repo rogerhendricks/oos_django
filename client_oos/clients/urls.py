@@ -21,5 +21,5 @@ urlpatterns = [
     path('client/<int:client.pk>/service/<int:pk>/detail', OosDetailView.as_view(), name='service_detail'),
     path('client/service/add', OosCreate.as_view(), name='service_add'),
     path('client/<int:client.pk>/service/<int:pk>/update', OosUpdateView.as_view(), name='service_update'),
-    path('client/<int:pk>/delete', OosDelete.as_view(), name='service_delete'),
+    path('client/<int:pk>/service/<int:oos.pk>/delete', OosDelete.as_view(), name='service_delete'),
 ]

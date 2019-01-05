@@ -83,10 +83,7 @@ class OosUpdateView(UpdateView):
 
 class OosDelete(DeleteView):
     model = Oos
-    def get_queryset(self, *args, **kwargs):
-        queryset = Oos.objects.get(client=self.kwargs.get('pk'), id=self.kwargs.get('oos_id'))
-        return queryset
-    success_url = reverse_lazy('client:service')
+    success_url = reverse_lazy('client:index')
 
 
 #search services from OosListView

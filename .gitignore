@@ -74,3 +74,4 @@ target/
 
 
 \.idea/
+client_oos/clients/migrations/0003_auto_20190104_0550.py
