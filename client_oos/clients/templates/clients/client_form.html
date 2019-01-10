@@ -1,10 +1,37 @@
 {% extends 'clients/base.html' %}
-
 {% block content %}
     <h1>Add a client</h1>
     <form method="POST" class="new-form">
         {% csrf_token %}
-       {{ form.as_p }}
+        <div class='row'>
+          <div class='col'>
+            <label>Record Number:</label><input type="text" name="record_number" class="form-control" placeholder="Record Number"><br>
+            <label>First Name:</label><input type="text" name="first_name" class="form-control" placeholder="First Name"><br>
+            <label>Last Name:</label><input type="text" name="last_name" class="form-control" placeholder="Last Name"><br>
+            <label>Date Of Birth:</label><input type="date" id="datepicker" name="dob" class="form-control" placeholder="YY-MM-DD"><br>
+            </div>
+          <div class='col'>
+            <label for='InputManufacturer'>Device Manufacturer:</label>
+            <select id='InputManufacturer' name="device_man" class="form-control">
+              <option value="Abbott">Abbott</option>
+              <option value="Biotronik">Biotronik</option>
+              <option value="Boston Scientific">Boston Scientific</option>
+              <option value="Medtronic">Medtronic</option>
+              <option value="Sorin">Sorin</option>
+            </select><br>
+            <label>Device Model:</label><input type="text" name="device_name" class="form-control" placeholder="Device Model"><br>
+            <label>Device Model:</label><input type="text" name="device_serial" class="form-control" placeholder="Device Serial"><br>
+            <label>Device Implant Date:</label><input type="date" id="datepicker" name="implant_date" class="form-control" placeholder="YY-MM-DD"><br>
+          </div>
+
+        </div>
+        <div class='row'>
         <button type="submit" class="btn btn-secondary">Add a client</button>
+        </div>
     </form>
+  <script type="text/javascript">
+    $( function() {
+      $('#datepicker').datepicker();
+    } );
+  </script>
 {% endblock %}

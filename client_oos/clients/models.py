@@ -5,19 +5,31 @@ from django.urls import reverse
 class Client(db.Model):
     __tablename__= "clients" # table name
 
+    dev_man_choices = (
+    ('Abbot','Abbot'),
+    ('Biotronik','Biotronik'),
+    ('Boston Scientific','Boston Scientific'),
+    ('Medtronic','Medtronic'),
+    ('Sorin','Sorin'),
+    )
     # columns!
     id = db.AutoField(primary_key=True)
     first_name = db.CharField(max_length=30)
     last_name = db.CharField(max_length=30)
     dob = db.DateField()
     record_number = db.PositiveIntegerField(null=True)
+    device_man=db.CharField(max_length=30, choices=dev_man_choices, null=True)
+    device_name=db.CharField(max_length=30, null=True)
+    implant_date=db.DateField(null=True)
+    device_serial=db.CharField(max_length=30, null=True)
+
 
     def get_absolute_url(self):
         return reverse('client:detail', kwargs={"pk": self.pk})
 
 
     def __str__(self):
-        return '%s %s' % (self.record_number, self.last_name )
+        return '%s %s' % ( self.record_number, self.last_name )
 
 
 class Oos(db.Model):

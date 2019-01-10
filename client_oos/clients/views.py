@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, View
 from .models import Client, Oos
 from django.shortcuts import redirect
 from .forms import SearchForm, ClientForm, OosForm
@@ -17,14 +17,15 @@ class ClientView(ListView):
         return Client.objects.all()
 
 
-class DetailView(DetailView):
+class ClientDetailView(DetailView, DeleteView):
     model = Client
     template_name = 'clients/detail.html'
+    success_url = reverse_lazy('client:index')
 
 
 class ClientCreate(CreateView):
     model = Client
-    fields= ['record_number','first_name', 'last_name', 'dob']
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
 
 
 class ClientUpdate(UpdateView):
@@ -50,7 +51,6 @@ class SearchList(ListView):
 
 
 # Services
-
 class OosView(ListView):
     template_name = 'clients/services_index.html'
     context_object_name = 'all_services'
@@ -58,6 +58,13 @@ class OosView(ListView):
     def get_queryset(self, *args, **kwargs):
         queryset = Oos.objects.filter(client=self.kwargs.get('pk')).order_by('-oos_date')
         return queryset
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(OosView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+
+        return context
 
 
 class OosDetailView(DetailView):
@@ -78,7 +85,6 @@ class OosUpdateView(UpdateView):
     model = Oos
     fields = ['content', 'oos_type', 'batt_volt', 'oos_date']
     template_name_suffix = '_update_form'
-    #success_url = reverse_lazy('client:service_detail')
 
 
 class OosDelete(DeleteView):

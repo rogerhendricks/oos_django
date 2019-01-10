@@ -9,14 +9,41 @@
 	<label style="color: #7B1FA2; font-weight: bold;">First Name: </label> {{client.first_name}}
 	<br>
 	<label style="color: #7B1FA2; font-weight: bold;">Last Name: </label> {{client.last_name}}
-	<br> 
+	<br>
 	<label style="color: #7B1FA2; font-weight: bold;">Date of Birth: </label> {{client.dob}}
 <br>
 </div>
 <div>
-<a class="btn btn-secondary" href="{% url 'client:service' client.pk %}">Services</a>
-<a class="btn btn-secondary" href="{% url 'client:client_update' client.pk %}">Update</a>
-<a class="btn btn-danger" href="{% url 'client:client_delete' client.pk %}">Delete</a> 
+	<a class="btn btn-secondary" href="{% url 'client:service' client.pk %}">Services</a>
+	<a class="btn btn-secondary" href="{% url 'client:client_update' client.pk %}">Update</a>
+	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
 </div>
+
+
+<!-- Delete Client Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Client"</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete "{{object.first_name}} {{ object.last_name }}"</p>
+      </div>
+      <div class="modal-footer">
+	  	<form method="post" action="{% url 'client:client_delete' client.pk %}">
+			{% csrf_token %}
+        	<button type="submit" class="btn btn-danger">Delete Client</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 {% endblock %}

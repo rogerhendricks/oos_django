@@ -1,0 +1,7 @@
+
+<div>
+	<label> Possible Client Demo Area </label>
+	{% for copy in oos.client_set.all %}
+  	<h3>{{copy.oos_type}}</h3>
+	{% endfor %}
+</div>

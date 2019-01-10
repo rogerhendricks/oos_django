@@ -4,7 +4,7 @@
     <h1>Add a client</h1>
     <form method="POST" class="new-form">
         {% csrf_token %}
-       {{ form.as_p }}
+        {{ form.as_p }}
         <button type="submit" class="btn btn-secondary">Add a client</button>
     </form>
 {% endblock %}
