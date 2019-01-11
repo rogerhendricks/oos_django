@@ -17,10 +17,12 @@ class ClientView(ListView):
         return Client.objects.all()
 
 
-class ClientDetailView(DetailView, DeleteView):
+class ClientDetailView(DetailView, DeleteView, CreateView):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
+
 
 
 class ClientCreate(CreateView):
@@ -30,7 +32,7 @@ class ClientCreate(CreateView):
 
 class ClientUpdate(UpdateView):
     model = Client
-    fields= ['record_number', 'first_name', 'last_name', 'dob']
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
     template_name_suffix = '_update_form'
 
 
