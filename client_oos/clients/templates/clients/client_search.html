@@ -4,13 +4,22 @@
         <h2>Search Results</h2>
         {% for client in results_list %}
         <div class="card">
+                <h3 class="card-header">{{client.first_name}} {{client.last_name}}</h3>
                 <div class="card-body">
-                <h3>{{client.first_name}} {{client.last_name}}</h3><br>
-                <label style="color: #7B1FA2; font-weight: bold;"> Record Number: </label>{{client.record_number}} 
-                <div>
-                        <a class="btn btn-secondary" href="{% url 'client:client_detail' client.pk %}">Details</a>
-                        <a class="btn btn-secondary" href="#">Services</a> 
-                </div>
+                        <div class="row">
+                                <div class="col">
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Record Number: </label>{{client.record_number}} <br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Date of Birth: </label>{{client.dob}} 
+                                </div>
+                                <div class="col">
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Device Manufacturer: </label>{{client.device_man}} <br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Device Name: </label>{{client.device_name}} 
+        
+                                </div>
+                        </div>
+                        <div class="row">
+                                <a class="btn btn-secondary" href="{% url 'client:client_detail' client.pk %}">Details</a> 
+                        </div>       
                 </div>
         </div>
         {% endfor %}
