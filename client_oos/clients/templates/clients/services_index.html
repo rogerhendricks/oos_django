@@ -11,16 +11,21 @@
         </div>
         {% for service in all_services %}
         <div class="card">
+                <h3 class="card-header">{{service.oos_type}}</h3>
                 <div class="card-body">
-                <h3>{{service.oos_type}}</h3><br>
-                <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
-                <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
-
-                <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}<br>
-                <label style="color: #7B1FA2; font-weight: bold;"> Client: </label> {{service.client.last_name}} <br>
-                <div>
-                        <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a>
-                </div>
+                        <div class="row">
+                                <div class="col">
+                                <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
+                                <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
+                                <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}<br>
+                                <label style="color: #7B1FA2; font-weight: bold;"> Client: </label> {{service.client.last_name}}
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col">
+                                <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a>
+                                </div>
+                        </div>
                 </div>
         </div>
         {% endfor %}
