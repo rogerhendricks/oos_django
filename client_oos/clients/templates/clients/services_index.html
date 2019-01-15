@@ -1,15 +1,14 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
-        {% include 'clients/client_nav.html' %}
-        <h2>Services Index</h2>
+        <h5>Services Index for {{client.first_name}} {{client.last_name}}</h5>
         <div>
                 <div>
                         <a class="btn btn-secondary" href="#">New Service</a>
-                        <a class="btn btn-secondary" href="#">Back to Client</a>
+                        <a class="btn btn-secondary" href="{% url 'client:client_detail' client.id %}">Back to Client</a>
                 </div>
         </div>
-        {% for service in all_services %}
+        {% for service in object_list %}
         <div class="card">
                 <h3 class="card-header">{{service.oos_type}}</h3>
                 <div class="card-body">

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, View
+from django.views.generic.detail import SingleObjectMixin
 from .models import Client, Oos
 from django.shortcuts import redirect
 from .forms import SearchForm, ClientForm, OosForm
@@ -53,20 +54,24 @@ class SearchList(ListView):
 
 
 # Services
-class OosView(ListView):
+class OosView(SingleObjectMixin, ListView):
     template_name = 'clients/services_index.html'
     context_object_name = 'all_services'
 
-    def get_queryset(self, *args, **kwargs):
-        queryset = Oos.objects.filter(client=self.kwargs.get('pk')).order_by('-oos_date')
-        return queryset
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Client.objects.all())
+        return super().get(request, *args, **kwargs)
+    
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
-        context = super(OosView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         # Create any data and add it to the context
-
+        context['client'] = self.object
         return context
+
+    def get_queryset(self):
+        return self.object.oos_set.all()
 
 
 class OosDetailView(DetailView):

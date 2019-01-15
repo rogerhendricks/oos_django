@@ -1,7 +1,7 @@
 {% extends 'clients/base.html' %}
 
 {% block content %}
-    <h1>Add a Service</h1>
+    <h5>Add a Service</h5>
     <form method="POST" class="new-form" >
         {% csrf_token %}
        {{ form.as_p }}

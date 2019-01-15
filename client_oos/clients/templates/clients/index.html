@@ -1,10 +1,10 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
-        <h2>Client Index</h2>
+        <h3>Client Index</h3>
         {% for client in all_clients %}
         <div class="card">
-                <h3 class="card-header">{{client.first_name}} {{client.last_name}}</h3>
+                <h4 class="card-header">{{client.first_name}} {{client.last_name}}</h4>
                 <div class="card-body">
                         <div class="row">
                                 <div class="col">
