@@ -4,16 +4,13 @@
 <div>
 	<h5>Service Details</h5>
 	<h4>{{oos.content_type}}</h4>
-	<label style="color: #7B1FA2; font-weight: bold;">Service Content: </label> {{oos.content}}
-	<br>
-	<label style="color: #7B1FA2; font-weight: bold;">Battery Voltage: </label> {{oos.batt_volt}}
-	<br>
 </div>
 <div id="accordion">
 	<div class="card">
 	  <div class="card-header" id="headingOne">
 		<h5 class="mb-0">
 		  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<span class="oi oi-wrench" aria-hidden="true"></span>&nbsp;
 			Measurements
 		  </button>
 		</h5>
@@ -21,38 +18,50 @@
   
 	  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 		<div class="card-body">
-			<label style="color: #7B1FA2; font-weight: bold;">Service Content: </label> {{oos.content}}
-			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Battery Voltage: </label> {{oos.batt_volt}}
-			<br>
+			<div class="row">
+				<div class="col">
+					<label style="color: #7B1FA2; font-weight: bold;">Battery Voltage: </label> {{oos.batt_volt}}<br>
+				</div>
+				<div class="col">
+					<label style="color: #7B1FA2; font-weight: bold;">Service Content: </label> {{oos.content}}<br>
+				</div>
+			</div>
 		</div>
 	  </div>
 	</div>
+
 	<div class="card">
 	  <div class="card-header" id="headingTwo">
 		<h5 class="mb-0">
 		  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			<span class="oi oi-pulse" aria-hidden="true"></span>&nbsp;
 			Arrhythmias
 		  </button>
 		</h5>
 	  </div>
+
 	  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
 		<div class="card-body">
 		  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
 		</div>
 	  </div>
 	</div>
+
 	<div class="card">
 	  <div class="card-header" id="headingThree">
 		<h5 class="mb-0">
 		  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+			<span class="oi oi-text" aria-hidden="true"></span>&nbsp;
 			Comments
 		  </button>
 		</h5>
 	  </div>
+
 	  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
 		<div class="card-body">
-		  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			<p>
+				{{oos.content}}
+			</p>
 		</div>
 	  </div>
 	</div>
@@ -63,7 +72,31 @@
 <div>
 <a class="btn btn-secondary" href="{% url 'client:service' oos.client_id %}">Back to Services</a>
 <a class="btn btn-secondary" href="{% url 'client:service_update' oos.pk %}">Update</a>
-<a class="btn btn-danger" href="{% url 'client:service_delete' oos.pk %}">Delete</a> 
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+
 </div>
 
+<!-- Delete Service Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h3 class="modal-title">Delete Service"</h3>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <p>Are you sure you want to delete This Service</p>
+		</div>
+		<div class="modal-footer">
+			<form method="post" action="{% url 'client:service_delete' oos.pk %}">
+			  {% csrf_token %}
+			  <button type="submit" class="btn btn-danger">Delete Service</button>
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </div>
 {% endblock %}
