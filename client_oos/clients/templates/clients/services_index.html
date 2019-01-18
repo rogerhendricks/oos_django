@@ -1,7 +1,7 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
-        <h5>Services Index for {{client.first_name}} {{client.last_name}}</h5>
+        <h4>Services Index for {{client.first_name}} {{client.last_name}}</h4>
         <div>
                 <div>
                         <a class="btn btn-secondary" href="#">New Service</a>
@@ -10,14 +10,13 @@
         </div>
         {% for service in object_list %}
         <div class="card">
-                <h3 class="card-header">{{service.oos_type}}</h3>
+                <h4 class="card-header">{{service.oos_type}}</h4>
                 <div class="card-body">
                         <div class="row">
                                 <div class="col">
-                                <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
-                                <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
-                                <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}<br>
-                                <label style="color: #7B1FA2; font-weight: bold;"> Client: </label> {{service.client.last_name}}
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}<br>
                                 </div>
                         </div>
                         <div class="row">
@@ -28,4 +27,33 @@
                 </div>
         </div>
         {% endfor %}
+
+<div class = "container">
+  <nav class = "Page navigation">
+  {% if is_paginated %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"> 
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item"> 
+                <a class="page-link btn disabled" role="button" href="#" aria-disabled="true">Previous</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+                <a class="page-link btn disabled" role="button" href="#" aria-disabled="true">Next</a>
+        </li>
+        {% endif %}
+     </ul>
+     {% endif %}
+  </nav>
+</div>
+
 {% endblock %}

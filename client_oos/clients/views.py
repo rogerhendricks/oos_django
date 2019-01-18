@@ -13,6 +13,7 @@ from django.utils import timezone
 class ClientView(ListView):
     template_name = 'clients/index.html'
     context_object_name = 'all_clients'
+    paginate_by = 10
 
     def get_queryset(self):
         return Client.objects.all()
@@ -57,6 +58,7 @@ class SearchList(ListView):
 class OosView(SingleObjectMixin, ListView):
     template_name = 'clients/services_index.html'
     context_object_name = 'all_services'
+    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Client.objects.all())
