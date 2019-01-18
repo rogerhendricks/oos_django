@@ -1,6 +1,7 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
+        {% include "clients/info_bar.html" %}
         <h3>Client Index</h3>
         {% for client in all_clients %}
         <div class="card">
