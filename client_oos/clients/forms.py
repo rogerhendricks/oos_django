@@ -18,6 +18,3 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ('last_name',)
-
-class Big():
-    pass
