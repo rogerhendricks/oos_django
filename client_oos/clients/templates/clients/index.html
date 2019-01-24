@@ -2,7 +2,7 @@
 
 {% block content %}
         {% include "clients/info_bar.html" %}
-        <h3>Client Index</h3>
+        <h3>All Clients</h3>
         {% for client in all_clients %}
         <div class="card">
                 <h4 class="card-header">{{client.first_name}} {{client.last_name}}</h4>

@@ -1,7 +1,10 @@
 from django.urls import path, re_path
 from django.conf.urls import url
+from django.conf.urls.static import static
 from . import views
 from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete
+from django.conf import settings
+
 
 app_name = 'client'
 
@@ -23,3 +26,6 @@ urlpatterns = [
     path('client/<int:client.pk>/service/<int:pk>/update', OosUpdateView.as_view(), name='service_update'),
     path('client/<int:pk>/service/<int:oos.pk>/delete', OosDelete.as_view(), name='service_delete'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
