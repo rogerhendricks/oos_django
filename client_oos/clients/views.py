@@ -2,12 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, View
 from django.views.generic.detail import SingleObjectMixin
 from .models import Client, Oos
+from django.http import HttpResponse
+from .utils import render_to_pdf
 from django.shortcuts import redirect
 from .forms import SearchForm, ClientForm, OosForm
 from django.contrib import messages
 from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
 from django.utils import timezone
+from django.template.loader import get_template
+
 
 # Clients
 class ClientView(ListView):
@@ -24,7 +28,6 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
     fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
-
 
 
 class ClientCreate(CreateView):
@@ -63,7 +66,6 @@ class OosView(SingleObjectMixin, ListView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Client.objects.all())
         return super().get(request, *args, **kwargs)
-    
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
@@ -101,7 +103,7 @@ class OosDelete(DeleteView):
     success_url = reverse_lazy('client:index')
 
 
-#search services from OosListView
+# search services from OosListView
 class OosSearchList():
     template_name = ''
     model = Oos
@@ -109,3 +111,18 @@ class OosSearchList():
 
     def get_queryset(self):
         pass
+
+
+# rendering services pdf
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        data = {
+            'today': datetime.date.today(),
+            'amount': 39.99,
+            'customer_name': 'Cooper Mann',
+            'order_id': 1233434,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
