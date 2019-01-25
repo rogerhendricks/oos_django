@@ -8,9 +8,9 @@ from django.contrib import messages
 from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
 from django.utils import timezone
-from datetime import datetime
+import datetime
 from django.http import HttpResponse
-from utils import render_to_pdf
+from .utils import render_to_pdf
 
 # Clients
 class ClientView(ListView):
@@ -113,13 +113,15 @@ class OosSearchList():
     def get_queryset(self):
         pass
 
+
+# adding service render to pdf
 class GeneratePdf(View):
+
     def get(self, request, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values('oos_type', 'batt_volt')
         data = {
-             'today': datetime.date.today(), 
-             'amount': 39.99,
-            'customer_name': 'Cooper Mann',
-            'order_id': 1233434,
+            'oos_type' : Oos.oos_type, 
+            'batt' : Oos.batt_volt,
         }
-        pdf = render_to_pdf('pdf/service_render.html', data)
+        pdf = render_to_pdf('clients/pdf/service_render.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
