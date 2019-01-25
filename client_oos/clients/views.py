@@ -118,10 +118,12 @@ class OosSearchList():
 class GeneratePdf(View):
 
     def get(self, request, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values('oos_type', 'batt_volt')
-        data = {
-            'oos_type' : Oos.oos_type, 
-            'batt' : Oos.batt_volt,
-        }
-        pdf = render_to_pdf('clients/pdf/service_render.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values()[0]
+        pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "service_%s.pdf" %("123456")
+            content = "inline; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
