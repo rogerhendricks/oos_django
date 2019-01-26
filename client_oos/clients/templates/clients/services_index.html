@@ -8,6 +8,7 @@
                         <a class="btn btn-secondary" href="{% url 'client:client_detail' client.id %}">Back to Client</a>
                 </div>
         </div>
+        <hr>
         {% for service in object_list %}
         <div class="card">
                 <h4 class="card-header">{{service.oos_type}}</h4>

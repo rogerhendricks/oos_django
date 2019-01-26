@@ -3,6 +3,7 @@
 {% block content %}
 <div>
 	<h3>Client Details</h3>
+	<hr>
 	<h4>{{client.first_name}} {{client.last_name}}</h4>
 	<div class="row">
 		<div class="col">
@@ -22,8 +23,9 @@
 			<label style="color: #7B1FA2; font-weight: bold;">Device Serial: </label> {{client.device_serial}}
 			<br>
 			<label style="color: #7B1FA2; font-weight: bold;">Implant Date: </label> {{client.implant_date}}
-		</div>
+			<br>
 	</div>
+	<hr>
 </div>
 <div>
 	<a class="btn btn-secondary" href="{% url 'client:service' client.pk %}">Services</a>
@@ -49,8 +51,8 @@
 	  	<form method="post" action="{% url 'client:client_delete' client.pk %}">
 			{% csrf_token %}
         	<button type="submit" class="btn btn-danger">Delete Client</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		</form>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</form>
       </div>
     </div>
   </div>
@@ -73,7 +75,6 @@
 	  	<form method="post" action="{% url 'client:client_update' client.pk %}">
 			{% csrf_token %}
 			{{form.as_p}}
-		
         	<button type="submit" class="btn btn-danger">Update Client</button>
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		</form>

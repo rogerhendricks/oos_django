@@ -10,8 +10,9 @@ from django.contrib import messages
 from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
 from django.utils import timezone
-from django.template.loader import get_template
-
+import datetime
+from django.http import HttpResponse
+from .utils import render_to_pdf
 
 # Clients
 class ClientView(ListView):
@@ -113,6 +114,7 @@ class OosSearchList():
         pass
 
 
+<<<<<<< HEAD
 # rendering services pdf
 
 class GeneratePdf(View):
@@ -126,3 +128,18 @@ class GeneratePdf(View):
         pdf = render_to_pdf('pdf/invoice.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
+=======
+# adding service render to pdf
+class GeneratePdf(View):
+
+    def get(self, request, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values()[0]
+        pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "service_%s.pdf" %(datetime.datetime.now())
+            content = "inline; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
+>>>>>>> cfdb0b898d676ae94523dea5e100c302ced3297b
