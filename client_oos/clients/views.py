@@ -122,7 +122,7 @@ class GeneratePdf(View):
         pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "service_%s.pdf" %("123456")
+            filename = "service_%s.pdf" %(datetime.datetime.now())
             content = "inline; filename='%s'" %(filename)
             response['Content-Disposition'] = content
             return response
