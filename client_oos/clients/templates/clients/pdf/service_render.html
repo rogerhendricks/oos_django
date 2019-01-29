@@ -2,9 +2,11 @@
     <head>
         <title>Title</title>
         <style type="text/css">
+
             body {
                 font-weight: 200;
                 font-size: 14px;
+                font-family: 'Open Sans';
             }
             .header {
                 font-size: 20px;
@@ -33,21 +35,46 @@
                 color: #333; /* old IE */
                 background-color: #fff; /* Modern Browsers */
             }
+            .row {
+                display: flex;
+              }
+              
+              .column {
+                flex: 50%;
+              }
         </style>
+
     </head>
     <body>
-        <div class='wrapper'>
-            <div class='header'>
-                <p class='title'>Service</p>
-                <p></p>
+        <!-- Content for Static Frame 'header_frame' -->
+        <div id="header_content">
+                <div class="title header">
+                    <span>Service</span>
+                    
+                </div>
+                <p id="header_data">
+                    Cardiac Unit, Westmead Hospital<br>
+                    Service Data: {{oos_date}}<br>
+                    Service Type: {{oos_type}} <br>   
+                </p>
             </div>
-        <div>
+        </div>
+
+        <!-- HTML Content -->
         <div class='details'>
-            Bill to: {{oos_type}}<br/>
-            Amount: {{ batt_volt }}<br/>
-            Date: 
+                <div class="row"></div>
+                    <div class="column" id="col1_frame">
+                    <span><u>Measurements</u></span><br>
+                    Battery Voltage: {{ batt_volt }}<br/>
+                    </div>
+                
+                    <div class="column" id="col2_frame">
+                    <span><u>Comments</u></span><br>
+                    Comments: {{ content }}<br/>
+                    </div> 
+                </div>  
             <hr class='hrItem' />
         </div>
-    </div>
+
     </body>
 </html>

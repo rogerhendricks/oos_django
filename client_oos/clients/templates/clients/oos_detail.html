@@ -73,6 +73,7 @@
 <a class="btn btn-secondary" href="{% url 'client:service' oos.client_id %}">Back to Services</a>
 <a class="btn btn-secondary" href="{% url 'client:service_update' oos.pk %}">Update</a>
 <a class="btn btn-primary" href="{% url 'client:service_pdf' oos.pk %}">PDF</a>
+<a class="btn btn-primary" href="{% url 'client:weasyservice_detail' oos.pk %}">Weasy PDF</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
 
 </div>

@@ -13,6 +13,8 @@ from django.utils import timezone
 import datetime
 from django.http import HttpResponse
 from .utils import render_to_pdf
+from django_weasyprint import WeasyTemplateResponseMixin
+from django.conf import settings
 
 # Clients
 class ClientView(ListView):
@@ -114,22 +116,7 @@ class OosSearchList():
         pass
 
 
-<<<<<<< HEAD
-# rendering services pdf
-
-class GeneratePdf(View):
-    def get(self, request, *args, **kwargs):
-        data = {
-            'today': datetime.date.today(),
-            'amount': 39.99,
-            'customer_name': 'Cooper Mann',
-            'order_id': 1233434,
-        }
-        pdf = render_to_pdf('pdf/invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-=======
-# adding service render to pdf
+# adding service render to pdf xhtmltopdf2
 class GeneratePdf(View):
 
     def get(self, request, *args, **kwargs):
@@ -142,4 +129,19 @@ class GeneratePdf(View):
             response['Content-Disposition'] = content
             return response
         return HttpResponse("Not found")
->>>>>>> cfdb0b898d676ae94523dea5e100c302ced3297b
+
+# adding service render to pdf using weasyprint
+class MyModelPrintView(WeasyTemplateResponseMixin, OosDetailView):
+    # output of MyModelView rendered as PDF with hardcoded CSS
+    pdf_stylesheets = [
+        settings.STATIC_URL + "css/pdf.css",
+    ]
+    # show pdf in-line (default: True, show download dialog)
+    pdf_attachment = False
+    # suggested filename (is required for attachment!)
+
+    # dynamically generate filename
+    def get_pdf_filename(self):
+        return 'bar-{at}.pdf'.format(
+            at=timezone.now().strftime('%Y%m%d-%H%M'),
+        )
