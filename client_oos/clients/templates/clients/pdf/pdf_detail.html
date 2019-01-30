@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>Service {{oos.oos_date}}</title>
+</head>
+<body>
+     <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="/static/images/logo_electrophysiology.jpg" alt="Cardiac Unit" height="106" width="275">
+            </div>
+            <div class="col-sm">
+                <h4>{{oos.oos_type}}</h4>
+                <h4></h4>{{oos.oos_date}}</h4>
+            </div>
+            <div class="col-sm">
+                <img src="/static/images/wslhd_header.png" alt="WSLH" height="97.5" width="349">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    {{ oos.content }}
+                </div>
+                <div class="col-sm">
+                    {{oos.client.id}}<br>
+                    {{oos.client.first_name}} {{oos.client.last_name}}
+                </div>
+                <div class="col-sm">
+                    {{oos.batt_volt}}<br>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

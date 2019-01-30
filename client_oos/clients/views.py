@@ -130,18 +130,11 @@ class GeneratePdf(View):
             return response
         return HttpResponse("Not found")
 
-# adding service render to pdf using weasyprint
-class MyModelPrintView(WeasyTemplateResponseMixin, OosDetailView):
-    # output of MyModelView rendered as PDF with hardcoded CSS
-    pdf_stylesheets = [
-        settings.STATIC_URL + "css/pdf.css",
-    ]
-    # show pdf in-line (default: True, show download dialog)
-    pdf_attachment = False
-    # suggested filename (is required for attachment!)
 
-    # dynamically generate filename
-    def get_pdf_filename(self):
-        return 'bar-{at}.pdf'.format(
-            at=timezone.now().strftime('%Y%m%d-%H%M'),
-        )
+class OosDetailPdf(DetailView):
+    template_name = 'clients/pdf/pdf_detail.html'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
+        return queryset
+

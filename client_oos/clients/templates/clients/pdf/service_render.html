@@ -1,12 +1,53 @@
 <html>
     <head>
-        <title>Title</title>
+        <meta charset="utf-8">
+        
+        <title>Report</title>
+        <meta name="description" content="Report example">
         <style type="text/css">
+            @page {
+                size: letter portrait;
+                @frame header_frame {           /* Static frame */
+                    -pdf-frame-content: header_content;
+                    left: 50pt; width: 512pt; top: 50pt; height: 100pt;
+                    -pdf-frame-border: 1;
+                }
+                @frame col1_frame {             /* Content frame 1 */
+                    left: 44pt; width: 245pt; top: 150pt; height: 600pt;
+                    -pdf-frame-border: 1;
+                }
+                @frame col2_frame {             /* Content frame 2 */
+                    left: 323pt; width: 245pt; top: 150pt; height: 600pt;
+                    -pdf-frame-border: 1;
+                }
+                @frame footer_frame {           /* Static frame */
+                    -pdf-frame-content: footer_content;
+                    left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+                    -pdf-frame-border: 1;
+                }
+            }
+            table { -pdf-keep-with-next: true; }
+            p { margin: 0; -pdf-keep-with-next: true; }
+            p.separator { -pdf-keep-with-next: false; font-size: 6pt; }
+
+            @font-face {
+                font-family: Montserrat, "Montserrat";
+                src: url(Montserrat-Medium.ttf);
+                font-style: medium;
+              }
 
             body {
                 font-weight: 200;
                 font-size: 14px;
-                font-family: 'Open Sans';
+                font-family: Montserrat;
+            }
+            .address {
+                font-size: 12px;
+                text-align: right;
+            }
+            .header_data {
+                font-size: 12px;
+                text-align: left;
             }
             .header {
                 font-size: 20px;
@@ -15,10 +56,10 @@
                 color: #007cae;
             }
             .title {
-                font-size: 22px;
+                font-size: 18px;
                 font-weight: 100;
                /* text-align: right;*/
-               padding: 10px 20px 0px 20px;  
+               padding: 10px 10px 0px 10px;  
             }
             .title span {
                 color: #007cae;
@@ -35,13 +76,6 @@
                 color: #333; /* old IE */
                 background-color: #fff; /* Modern Browsers */
             }
-            .row {
-                display: flex;
-              }
-              
-              .column {
-                flex: 50%;
-              }
         </style>
 
     </head>
@@ -52,29 +86,80 @@
                     <span>Service</span>
                     
                 </div>
+                <div class="address">
+                        Super Company<br>
+                        301 Cobblestone Way<br>
+                        Bedrock, 7077<br>
+                        super@tech.com  
+                        https://service.super.tech
+                </div>
                 <p id="header_data">
-                    Cardiac Unit, Westmead Hospital<br>
                     Service Data: {{oos_date}}<br>
                     Service Type: {{oos_type}} <br>   
                 </p>
-            </div>
+        </div>
+
+        <div id="footer_content">
+            (c) bottom the page
         </div>
 
         <!-- HTML Content -->
-        <div class='details'>
-                <div class="row"></div>
-                    <div class="column" id="col1_frame">
+        <div class='measurement'>
+                <div class="row">
+                    <div class="column">
                     <span><u>Measurements</u></span><br>
                     Battery Voltage: {{ batt_volt }}<br/>
                     </div>
                 
-                    <div class="column" id="col2_frame">
+                    <div class="column" >
                     <span><u>Comments</u></span><br>
                     Comments: {{ content }}<br/>
                     </div> 
                 </div>  
             <hr class='hrItem' />
         </div>
+        <div id="arrhythmias">
+                <h2 id="columns-title">Big title on left page, with text on columns</h2>
+          
+                <h3>This is a little subtitle, here to explain what we are talking about</h3>
+          
+                <section>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat faucibus vestibulum.
+                    Mauris varius orci quam. Nam dui mauris, dictum at elementum at, mollis pulvinar est.
+                    Nunc lobortis pharetra erat, id rutrum lorem malesuada in.
+                  </p>
+                  <p>
+                    Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget, placerat pharetra est.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae iaculis convallis.
+                    Vivamus molestie vitae nisl sed interdum. Nunc aliquam massa rhoncus finibus convallis.
+                    Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
+                    Proin dictum mauris condimentum consequat faucibus.
+                  </p>
+                  <p class="separator">&nbsp;<p>
+                  <p>
+                    Duis maximus mauris ac purus eleifend, sit amet blandit nulla lacinia.
+                    Maecenas massa dolor, suscipit at erat eget, maximus dignissim dolor. Praesent consectetur maximus libero, eu facilisis ligula finibus et.
+                    Cras rhoncus eros sit amet lorem auctor, a efficitur leo tincidunt. Sed viverra interdum odio, eget pulvinar tortor blandit lacinia.
+                    Praesent consequat congue commodo. Phasellus eu massa feugiat, imperdiet nisi a, sagittis ipsum.
+                  </p>
+                  <p>
+                    Suspendisse et gravida nunc. Quisque at felis nisl. Nam eget efficitur nunc.
+                    Vivamus fermentum imperdiet massa, porttitor elementum mauris faucibus scelerisque.
+                    Pellentesque ut metus tortor. Fusce vulputate ex at turpis consectetur, in vestibulum odio placerat.
+                    Suspendisse tempor sapien rutrum, cursus sem a, tincidunt odio. Sed in consequat augue.
+                    Proin finibus felis neque, ac hendrerit lorem consequat nec.
+                  </p>
+                  <p>
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce quam mi, dapibus et augue sit amet, porttitor volutpat orci.
+                    Vestibulum ac ligula at justo placerat pulvinar vel non velit. Duis vel iaculis nibh, non tristique lectus.
+                    Phasellus vel ex bibendum, accumsan tellus a, commodo nisi.
+                  </p>
+                  <p>
+                    Mauris tincidunt dolor ligula, et egestas lectus rutrum consectetur. Donec ac ex mollis, vestibulum libero in, convallis risus.
+                  </p>
+                </section>
+            </div>
 
     </body>
 </html>
