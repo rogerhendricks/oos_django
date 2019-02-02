@@ -28,7 +28,27 @@
             </div>
         </div>
     </div>
+
     <div class="container">
+            <div class="row">
+                    <div class="col mt-5">
+                        <p>Patient Name: {{oos.client.first_name}} {{oos.client.last_name}}</p>
+                        <p>Patient ID: {{oos.client.id}}</p>
+                    </div>
+                   
+                    <div class="col my-5 text-right">
+                        <address>
+                            Cardiac Unit, Clinical Measurements<br> 
+                            Level 2, Westmead Hospital<br>
+                            Cnr Hawkbury Rd & Darcy<br>
+                            Westmead, NSW 2145
+                        </address>
+                    </div>
+                </div>
+    </div>
+
+    <div class="container">
+            <hr>
             <div class="row">
                 <div class="col-sm">
                     {{ oos.content }}

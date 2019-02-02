@@ -4,7 +4,7 @@
         <h4>Services Index for {{client.first_name}} {{client.last_name}}</h4>
         <div>
                 <div>
-                        <a class="btn btn-secondary" href="#">New Service</a>
+                        <a class="btn btn-secondary" href="{% url 'client:service_new' client.id %}">New Service</a>
                         <a class="btn btn-secondary" href="{% url 'client:client_detail' client.id %}">Back to Client</a>
                 </div>
         </div>

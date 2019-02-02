@@ -10,8 +10,26 @@ class ClientForm(forms.ModelForm):
 
 class OosForm(forms.ModelForm):
    class Meta:
+        #model = Oos
+        #fields = ('client','content', 'oos_type', 'batt_volt', 'oos_date')
         model = Oos
-        fields = ('content', 'oos_type', 'batt_volt', 'oos_date')
+        fields = [
+                    'client',
+                    'oos_type',
+                    'oos_date',
+                    'batt_volt',
+                    'content',
+                    ]
+        labels = {
+            'oos_type': 'Service Type',
+            'oos_date': 'Service Date',
+            'batt_volt': 'Battery Voltage',
+            'content': 'Comments',
+            }
+        widgets = {
+            'client': forms.HiddenInput()
+            }
+        
 
 
 class SearchForm(forms.ModelForm):

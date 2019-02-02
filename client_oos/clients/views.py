@@ -85,19 +85,20 @@ class OosDetailView(DetailView):
     template_name = 'clients/oos_detail.html'
 
     def get_queryset(self, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk'))
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
         return queryset
 
 
 class OosCreate(CreateView):
     template_name = 'clients/oos_create.html'
     model = Oos
-    fields = ['client','content', 'oos_type', 'batt_volt', 'oos_date' ]
+    fields = ['client','oos_date', 'oos_type', 'batt_volt','content', ]
+    #form_class = OosForm
 
 
 class OosUpdateView(UpdateView):
     model = Oos
-    fields = ['content', 'oos_type', 'batt_volt', 'oos_date']
+    fields = ['oos_date','oos_type', 'batt_volt', 'content']
     template_name_suffix = '_update_form'
 
 
@@ -138,3 +139,13 @@ class OosDetailPdf(DetailView):
         queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
         return queryset
 
+class OosCreateNew(CreateView):
+    template_name = 'clients/oos_create.html'
+    #model = Oos
+    #fields = ['client', 'oos_date', 'oos_type', 'batt_volt','content', ]
+    form_class = OosForm
+
+    def get_initial(self, **kwargs):
+        initial = super(OosCreateNew, self).get_initial()
+        initial['client'] = self.kwargs.get('pk')
+        return initial
