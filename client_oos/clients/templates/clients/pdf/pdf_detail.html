@@ -8,12 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/print.css' %}">
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <title>Service {{oos.oos_date}}</title>
 </head>
+
+
 <body>
+    <!-- Letterhead -->
      <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -28,12 +31,17 @@
             </div>
         </div>
     </div>
+    <!-- Letterhead -->
 
+
+    <!-- Addresses & Demographic Details -->
     <div class="container">
             <div class="row">
                     <div class="col mt-5">
-                        <p>Patient Name: {{oos.client.first_name}} {{oos.client.last_name}}</p>
-                        <p>Patient ID: {{oos.client.id}}</p>
+                        <div>
+                            <p>Patient Name: {{oos.client.first_name}} {{oos.client.last_name}}</p>
+                            <p>Patient ID: {{oos.client.id}}</p>
+                        </div>
                     </div>
                    
                     <div class="col my-5 text-right">
@@ -46,9 +54,13 @@
                     </div>
                 </div>
     </div>
+    <!-- Addresses & Demographic Details -->
 
+
+    <!-- Measurements -->
     <div class="container">
             <hr>
+            <!-- Device Measuremnts-->
             <div class="row">
                 <div class="col-sm">
                     {{ oos.content }}
@@ -61,6 +73,42 @@
                     {{oos.batt_volt}}<br>
                 </div>
             </div>
+            <hr>
+            <!-- Arrhythmias -->
+            <div class="row">
+                <div class="col-sm">
+                    {{ oos.content }}
+                </div>
+                <div class="col-sm">
+                    {{oos.client.id}}<br>
+                    {{oos.client.first_name}} {{oos.client.last_name}}
+                </div>
+                <div class="col-sm">
+                    {{oos.batt_volt}}<br>
+                </div>
+            </div>
+            <hr>
+            <!-- Comments -->
+            <div class="row">
+                <div class="col-sm">
+                    {{ oos.content }}
+                </div>
+            </div>
+          
+    </div>
+    <!-- Measurements -->
+    
+    <!-- Footer -->
+    <div class="container">
+        <div class="navbar navbar-light bg-light navbar-static-bottom navbar-fixed-bottom">
+            <div class="container">
+                Cardiac Physiologist:
+                <span> Cardiac Unit, Westmead Hospital, Westmead NSW, 2145</span>
+            </div>
         </div>
+    </div>
+    <!-- Footer -->
+
+
 </body>
 </html>

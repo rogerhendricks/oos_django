@@ -1,0 +1,109 @@
+{% load static %}
+<head>
+    <script src="{% static 'js/chart.min.js' %}"></script>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <canvas id="battery" width="350" height="150"></canvas>
+            <script>
+                    var ctx = document.getElementById("battery").getContext('2d');
+                    var battery = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: ["Red",],
+                            datasets: [{
+                                label: 'Battery',
+                                data: [12],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: false,
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            </script>
+        </div>
+        <div class="col">
+                <canvas id="impedance" width="350" height="150"></canvas>
+            <script>
+                    var ctx = document.getElementById("impedance").getContext('2d');
+                    var impedance = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [0, 20, 40],
+                            datasets: [{
+                                label: 'RV',
+                                data: [{
+                                    x: 10,
+                                    y: 20
+                                }, {
+                                    x: 15,
+                                    y: 10
+                                },
+                                {
+                                    x: 27,
+                                    y: 38
+                                }],
+                                
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                ],
+                                borderWidth: 1,
+                                fill: false
+                            },
+                            {
+                                label: 'LV',
+                                data: [{
+                                    x: 9,
+                                    y: 25
+                                }, {
+                                    x: 20,
+                                    y: 30
+                                },
+                                {
+                                    x: 26,
+                                    y: 35
+                                }],
+                                
+                                borderColor: [
+                                    'rgb(63, 191, 63)',
+                                ],
+                                borderWidth: 1,
+                                fill: false
+                            } 
+                            ]
+                        },
+                        options: {
+                            
+                            responsive: false,
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    stacked: true
+                                }]
+                            }
+                        }
+                    });
+            </script>
+         </div>
+         <div class="col">
+             Column "Maybe Arrythmias"
+         </div>
+    </div>
+</div>

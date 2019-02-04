@@ -139,6 +139,7 @@ class OosDetailPdf(DetailView):
         queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
         return queryset
 
+
 class OosCreateNew(CreateView):
     template_name = 'clients/oos_create.html'
     #model = Oos
