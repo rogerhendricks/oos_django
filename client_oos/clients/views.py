@@ -142,8 +142,6 @@ class OosDetailPdf(DetailView):
 
 class OosCreateNew(CreateView):
     template_name = 'clients/oos_create.html'
-    #model = Oos
-    #fields = ['client', 'oos_date', 'oos_type', 'batt_volt','content', ]
     form_class = OosForm
 
     def get_initial(self, **kwargs):
