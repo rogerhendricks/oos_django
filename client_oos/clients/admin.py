@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Client, Oos
+from .models import Client, Oos, Doc
 
-# admin.site.register(Client)
+
 admin.site.register(Oos)
 
 admin.site.site_header = "Super Hero Clinic Admin"
@@ -15,6 +15,10 @@ class OosInLine(admin.StackedInline):
     model = Oos
     ordering = ('-oos_date',)
     extra = 0
+
+@admin.register(Doc)
+class DocAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Client)

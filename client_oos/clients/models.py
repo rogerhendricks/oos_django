@@ -22,6 +22,8 @@ class Client(db.Model):
     device_name=db.CharField(max_length=30, null=True)
     implant_date=db.DateField(null=True)
     device_serial=db.CharField(max_length=30, null=True)
+    bol_voltage = db.DecimalField(max_digits=3, decimal_places=2, null=True)
+    eri_voltage = db.DecimalField(max_digits=3, decimal_places=2, null=True)
 
 
     def get_absolute_url(self):
@@ -58,3 +60,22 @@ class Oos(db.Model):
 
     def __str__(self):
         return self.oos_type
+
+class Doc(db.Model):
+    __tablename__= "doc"
+
+    id = db.AutoField(primary_key=True)
+    first_name = db.CharField(max_length=30)
+    last_name = db.CharField(max_length=30)
+    address = db.CharField(max_length=120, null=True)
+    phone_1 = db.PositiveIntegerField(null=True)
+    phone_2 = db.PositiveIntegerField(null=True)
+    clients = db.ManyToManyField(Client)
+
+    class Meta:
+        ordering = ('-last_name',)
+
+
+    def __str__(self):
+        return '%s %s' % ( self.first_name, self.last_name )
+

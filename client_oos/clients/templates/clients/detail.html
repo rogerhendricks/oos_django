@@ -23,6 +23,15 @@
 			<label style="color: #7B1FA2; font-weight: bold;">Device Serial: </label> {{client.device_serial}}
 			<br>
 			<label style="color: #7B1FA2; font-weight: bold;">Implant Date: </label> {{client.implant_date}}
+			<div>
+			<label style="color: #7B1FA2; font-weight: bold;">Doctors List: </label>
+			<br>
+			<ul class="list-group">
+				{% for doc in client.doc_set.all %}
+    		<li class="list-group-item">{{ doc.first_name }} {{ doc.last_name }}</li>
+				{% endfor %}
+			</ul>
+			</div>
 			<br>
 	</div>
 	<hr>

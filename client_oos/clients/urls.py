@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
-from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosDetailPdf, OosCreateNew
+from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosDetailPdf, OosCreateNew, DoctorCreate
 from django.conf import settings
 
 
@@ -28,6 +28,8 @@ urlpatterns = [
     path('client/<int:pk>/service/add', OosCreateNew.as_view(), name='service_new'),
     path('client/<int:client.pk>/service/<int:pk>/update', OosUpdateView.as_view(), name='service_update'),
     path('client/<int:pk>/service/<int:oos.pk>/delete', OosDelete.as_view(), name='service_delete'),
+    # /doctors
+    path('doctor/new/',DoctorCreate.as_view() , name='doctor_new'),
 ]
 
 if settings.DEBUG:

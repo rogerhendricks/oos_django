@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, View
 from django.views.generic.detail import SingleObjectMixin
-from .models import Client, Oos
+from .models import Client, Oos, Doc
 from django.http import HttpResponse
 from .utils import render_to_pdf
 from django.shortcuts import redirect
-from .forms import SearchForm, ClientForm, OosForm
+from .forms import SearchForm, ClientForm, OosForm, DocForm
 from django.contrib import messages
 from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
@@ -30,17 +30,19 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
+    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = ClientForm
+  
 
 
 class ClientCreate(CreateView):
     model = Client
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
 
 
 class ClientUpdate(UpdateView):
     model = Client
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial']
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     template_name_suffix = '_update_form'
 
 
@@ -148,3 +150,12 @@ class OosCreateNew(CreateView):
         initial = super(OosCreateNew, self).get_initial()
         initial['client'] = self.kwargs.get('pk')
         return initial
+
+
+# Doctors
+
+class DoctorCreate(CreateView):
+    #model = Doc
+    template_name = 'clients/doctor_new.html'
+    form_class = DocForm
+    success_url = reverse_lazy('client:index')
