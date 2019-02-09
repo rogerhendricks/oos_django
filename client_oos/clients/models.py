@@ -2,6 +2,26 @@ from django.db import models as db
 from django.urls import reverse
 
 
+class Doc(db.Model):
+    __tablename__= "doc"
+
+    id = db.AutoField(primary_key=True)
+    first_name = db.CharField(max_length=30)
+    last_name = db.CharField(max_length=30)
+    address = db.CharField(max_length=120, null=True)
+    phone_1 = db.PositiveIntegerField(null=True)
+    phone_2 = db.PositiveIntegerField(null=True)
+    #clients = db.ManyToManyField(Client)
+
+    class Meta:
+        ordering = ('-last_name',)
+
+
+    def __str__(self):
+        return '%s %s' % ( self.first_name, self.last_name )
+
+
+
 class Client(db.Model):
     __tablename__= "clients" # table name
 
@@ -24,6 +44,7 @@ class Client(db.Model):
     device_serial=db.CharField(max_length=30, null=True)
     bol_voltage = db.DecimalField(max_digits=3, decimal_places=2, null=True)
     eri_voltage = db.DecimalField(max_digits=3, decimal_places=2, null=True)
+    doctors = db.ManyToManyField(Doc)
 
 
     def get_absolute_url(self):
@@ -60,22 +81,4 @@ class Oos(db.Model):
 
     def __str__(self):
         return self.oos_type
-
-class Doc(db.Model):
-    __tablename__= "doc"
-
-    id = db.AutoField(primary_key=True)
-    first_name = db.CharField(max_length=30)
-    last_name = db.CharField(max_length=30)
-    address = db.CharField(max_length=120, null=True)
-    phone_1 = db.PositiveIntegerField(null=True)
-    phone_2 = db.PositiveIntegerField(null=True)
-    clients = db.ManyToManyField(Client)
-
-    class Meta:
-        ordering = ('-last_name',)
-
-
-    def __str__(self):
-        return '%s %s' % ( self.first_name, self.last_name )
 

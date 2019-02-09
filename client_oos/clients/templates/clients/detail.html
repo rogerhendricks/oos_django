@@ -27,7 +27,7 @@
 			<label style="color: #7B1FA2; font-weight: bold;">Doctors List: </label>
 			<br>
 			<ul class="list-group">
-				{% for doc in client.doc_set.all %}
+				{% for doc in client.doctors.all %}
     		<li class="list-group-item">{{ doc.first_name }} {{ doc.last_name }}</li>
 				{% endfor %}
 			</ul>

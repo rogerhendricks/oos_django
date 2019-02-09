@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from .utils import render_to_pdf
 from django_weasyprint import WeasyTemplateResponseMixin
 from django.conf import settings
+#from crispy_forms.helper import FormHelper
 
 # Clients
 class ClientView(ListView):
@@ -30,15 +31,19 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
-    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
-    form_class = ClientForm
+    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+
   
 
 
 class ClientCreate(CreateView):
     model = Client
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = ClientForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #context['doctors'] = Doc.objects.get()
+        return context
 
 class ClientUpdate(UpdateView):
     model = Client
