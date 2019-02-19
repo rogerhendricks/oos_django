@@ -1,5 +1,5 @@
 {% extends 'clients/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div>
 	<h3>Client Details</h3>
@@ -28,7 +28,7 @@
 			<br>
 			<ul class="list-group">
 				{% for doc in client.doctors.all %}
-    		<li class="list-group-item">{{ doc.first_name }} {{ doc.last_name }}</li>
+    		<li class="list-group-item">{{ doc.doc_type }}: {{ doc.first_name }} {{ doc.last_name }}</li>
 				{% endfor %}
 			</ul>
 			</div>
@@ -69,7 +69,7 @@
 
 <!-- Update Client Modal-->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Update Client</h3>
@@ -81,15 +81,60 @@
         <p>Update the details for "{{object.first_name}} {{ object.last_name }}"</p>
       </div>
       <div class="modal-footer">
+      <div class="container">
+          <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#client_details" role="tab" aria-controls="nav-home" aria-selected="true">Client Details</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#device_details" role="tab" aria-controls="nav-profile" aria-selected="false">Device Details</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#doctors_list" role="tab" aria-controls="nav-contact" aria-selected="false">Doctors List</a>
+              </div>
+          </nav>
+
+
 	  	<form method="post" action="{% url 'client:client_update' client.pk %}">
-			{% csrf_token %}
-			{{form.as_p}}
-        	<button type="submit" class="btn btn-danger">Update Client</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		</form>
+      {% csrf_token %}
+      <div class='tab-content' id="nav-tabContent">
+			  <div class='form-row tab-pane fade show active' role="tabpanel" id="client_details" role="tabpanel">
+          <div class='form-group col-md-4 mb-0'>
+            {{ form.record_number|as_crispy_field }}
+            {{ form.first_name|as_crispy_field }}
+            {{ form.last_name|as_crispy_field }}
+            {{ form.dob|as_crispy_field }}
+          </div>
+        </div>
+
+        <div class='form-row tab-pane fade' role="tabpanel" id="device_details" role="tabpanel">
+          <div class='form-row'>
+            <div class='form-group col-md-6 mb-0'>
+              {{ form.device_man|as_crispy_field }}
+              {{ form.device_name|as_crispy_field }}
+              {{ form.bol_voltage|as_crispy_field }}
+            </div>
+            <div class='form-group col-md-6 mb-0'>
+              {{ form.device_serial|as_crispy_field }}
+              {{ form.implant_date|as_crispy_field }}
+              {{ form.eri_voltage|as_crispy_field }}
+            </div>
+          </div>
+        </div>
+
+        <div class='form-row tab-pane fade' role="tabpanel" id="doctors_list" role="tabpanel">
+          <div class='form-group col-md-4 mb-0 '>
+							<div style="overflow-y: scroll; height:400px; border: thin solid black;">
+              {{ form.doctors|as_crispy_field }}
+							</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Update Client</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
+      </form>
+      
+
+      </div>
+    </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

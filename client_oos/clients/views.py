@@ -11,10 +11,11 @@ from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
 from django.utils import timezone
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .utils import render_to_pdf
 from django_weasyprint import WeasyTemplateResponseMixin
 from django.conf import settings
+from django.core.mail import BadHeaderError, send_mail
 #from crispy_forms.helper import FormHelper
 
 # Clients
@@ -31,8 +32,8 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
-
+    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = ClientForm
   
 
 
@@ -40,14 +41,11 @@ class ClientCreate(CreateView):
     model = Client
     form_class = ClientForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #context['doctors'] = Doc.objects.get()
-        return context
 
 class ClientUpdate(UpdateView):
     model = Client
-    fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = ClientForm
     template_name_suffix = '_update_form'
 
 
@@ -143,7 +141,9 @@ class OosDetailPdf(DetailView):
     template_name = 'clients/pdf/pdf_detail.html'
 
     def get_queryset(self, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors')
+
+        #queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
         return queryset
 
 
@@ -164,3 +164,28 @@ class DoctorCreate(CreateView):
     template_name = 'clients/doctor_new.html'
     form_class = DocForm
     success_url = reverse_lazy('client:index')
+
+
+class DoctorView(ListView):
+    template_name = 'doctor_index.html'
+    context_object_name = 'all_doctors'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Doc.objects.all()
+
+
+#def send_email(request):
+#    subject = request.POST.get('subject', '')
+#    message = request.POST.get('message', '')
+#    from_email = request.POST.get('from_email', '')
+#    if subject and message and from_email:
+#        try:
+#            send_mail(subject, message, from_email, ['admin@example.com'])
+#        except BadHeaderError:
+#            return HttpResponse('Invalid header found.')
+#        return HttpResponseRedirect('/contact/thanks/')
+#    else:
+#        # In reality we'd use a form class
+#        # to get proper validation errors.
+#        return HttpResponse('Make sure all fields are entered and valid.')

@@ -4,6 +4,11 @@ from django.urls import reverse
 
 class Doc(db.Model):
     __tablename__= "doc"
+    doc_type_choices = (
+        ('Surgeon','Surgeon'),
+        ('Cardiologist','Cardiologist'),
+        ('General Practitioner','General Practitioner'),
+    )
 
     id = db.AutoField(primary_key=True)
     first_name = db.CharField(max_length=30)
@@ -11,14 +16,20 @@ class Doc(db.Model):
     address = db.CharField(max_length=120, null=True)
     phone_1 = db.PositiveIntegerField(null=True)
     phone_2 = db.PositiveIntegerField(null=True)
+    doc_type = db.CharField(max_length=30, choices=doc_type_choices, null=True)
     #clients = db.ManyToManyField(Client)
 
     class Meta:
         ordering = ('-last_name',)
 
 
+    #def __str__(self):
+    #    return '%s %s %s' % ( self.doc_type, self.first_name, self.last_name )
     def __str__(self):
-        return '%s %s' % ( self.first_name, self.last_name )
+        field_values = []
+        for field in self._meta.get_fields():
+            field_values.append(str(getattr(self, field.name, '')))
+        return ' '.join(field_values)
 
 
 

@@ -1,0 +1,56 @@
+{% extends "clients/base.html" %}
+
+{% block content %}
+        {% include "clients/info_bar.html" %}
+        <h3>All Doctors</h3>
+        {% for doctor in all_doctors %}
+        <div class="card">
+                <h4 class="card-header">{{doctor.first_name}} {{doctor.last_name}}</h4>
+                <div class="card-body">
+                        <div class="row">
+                                <div class="col">
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Address: </label>{{doctor.address}}<br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Email: </label> 
+                                </div>
+                                <div class="col">
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Phone # 1: </label>{{doctor.phone_1}}<br>
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Phone # 2: </label>{{doctor.phone_2}}
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col">
+                                <a class="btn btn-secondary" href="">Details</a>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        {% endfor %}
+
+<div class = "container">
+  <nav class = "Page navigation">
+  {% if is_paginated %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"> 
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item"> 
+                <a class="page-link btn disabled" role="button" href="#" aria-disabled="true">Previous</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+                <a class="page-link btn disabled" role="button" href="#" aria-disabled="true">Next</a>
+        </li>
+        {% endif %}
+     </ul>
+     {% endif %}
+  </nav>
+</div>
+{% endblock %}
