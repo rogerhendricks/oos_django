@@ -175,6 +175,23 @@ class DoctorView(ListView):
         return Doc.objects.all()
 
 
+
+class DoctorDetailView(DetailView, DeleteView, CreateView):
+    model = Doc
+    template_name = 'doctor_detail.html'
+    success_url = reverse_lazy('client:doctor_index')
+    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = DocForm
+
+class DoctorDelete(DeleteView):
+    model = Doc
+    success_url = reverse_lazy('client:doctor_index')
+
+class DoctorUpdate(UpdateView):
+    model = Doc
+    #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
+    form_class = DocForm
+
 #def send_email(request):
 #    subject = request.POST.get('subject', '')
 #    message = request.POST.get('message', '')
