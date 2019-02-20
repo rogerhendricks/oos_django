@@ -50,4 +50,4 @@ class SearchForm(forms.ModelForm):
 class DocForm(forms.ModelForm):
     class Meta: 
         model = Doc
-        fields = ('doc_type','first_name','last_name','address','phone_1','phone_2')
+        fields = ('doc_type','first_name','last_name','address','phone_1','phone_2', 'email')

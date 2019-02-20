@@ -18,6 +18,10 @@ from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
 #from crispy_forms.helper import FormHelper
 
+
+
+
+
 # Clients
 class ClientView(ListView):
     template_name = 'clients/index.html'
@@ -63,6 +67,11 @@ class SearchList(ListView):
         search = self.request.GET.get('search')
         queryset = Client.objects.filter(Q(last_name__icontains=search)|Q(first_name__icontains=search)|Q(record_number__icontains=search))
         return queryset
+
+
+
+
+
 
 
 # Services
@@ -157,17 +166,25 @@ class OosCreateNew(CreateView):
         return initial
 
 
+
+
+
+
+
+
+
+
 # Doctors
 
 class DoctorCreate(CreateView):
     #model = Doc
-    template_name = 'clients/doctor_new.html'
+    template_name = 'clients/doctors/doctor_new.html'
     form_class = DocForm
     success_url = reverse_lazy('client:index')
 
 
 class DoctorView(ListView):
-    template_name = 'doctor_index.html'
+    template_name = 'clients/doctors/doctor_index.html'
     context_object_name = 'all_doctors'
     paginate_by = 10
 
@@ -178,7 +195,7 @@ class DoctorView(ListView):
 
 class DoctorDetailView(DetailView, DeleteView, CreateView):
     model = Doc
-    template_name = 'doctor_detail.html'
+    template_name = 'clients/doctors/doctor_detail.html'
     success_url = reverse_lazy('client:doctor_index')
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
@@ -191,6 +208,17 @@ class DoctorUpdate(UpdateView):
     model = Doc
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
+
+class DoctorSearchList(ListView):
+    template_name = 'clients/doctors/doctor_search.html'
+    model = Doc
+    context_object_name = 'results_list'
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        queryset = Doc.objects.filter(Q(last_name__icontains=search)|Q(first_name__icontains=search))
+        return queryset
+
 
 #def send_email(request):
 #    subject = request.POST.get('subject', '')

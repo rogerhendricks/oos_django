@@ -1,4 +1,4 @@
-{% extends 'clients/base.html' %}
+{% extends 'clients/doctors/doctor_base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div>
@@ -7,35 +7,27 @@
 	<h4>{{doc.first_name}} {{doc.last_name}}</h4>
 	<div class="row">
 		<div class="col">
-			<label style="color: #7B1FA2; font-weight: bold;">Record Number: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Address: </label> {{doc.address}}
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">First Name: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Email: </label> {{doc.email}}
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Last Name: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Phone 1: </label> {{doc.phone_1}}
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Date of Birth: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Phone 2: </label> {{doc.phone_2}}
 		</div>
 		<div class="col">
-			<label style="color: #7B1FA2; font-weight: bold;">Device manufacturer: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Other 1: </label> 
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Device Name: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Other 2: </label> 
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Device Serial: </label> 
+			<label style="color: #7B1FA2; font-weight: bold;">Other 3: </label> 
 			<br>
-			<label style="color: #7B1FA2; font-weight: bold;">Implant Date: </label> 
-			<div>
-			<label style="color: #7B1FA2; font-weight: bold;">Doctors List: </label>
-			<br>
-			<ul class="list-group">
-				 list
-			</ul>
-			</div>
+			<label style="color: #7B1FA2; font-weight: bold;">Other 4: </label> 
 			<br>
 	</div>
 	<hr>
 </div>
 <div>
-	<a class="btn btn-secondary" href="">Services</a>
 	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateModal">Update</button>
 	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
 </div>
@@ -102,10 +94,12 @@
         <div class='form-row tab-pane fade' role="tabpanel" id="device_details" role="tabpanel">
           <div class='form-row'>
             <div class='form-group col-md-6 mb-0'>
-                address
+              {{ form.address|as_crispy_field }}
+              {{ form.email|as_crispy_field }}
             </div>
             <div class='form-group col-md-6 mb-0'>
-              numbers
+              {{ form.phone_1|as_crispy_field }}
+              {{ form.phone_2|as_crispy_field }}
             </div>
           </div>
         </div>

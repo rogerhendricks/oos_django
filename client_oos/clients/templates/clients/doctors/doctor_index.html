@@ -1,7 +1,6 @@
-{% extends "clients/base.html" %}
+{% extends 'clients/doctors/doctor_base.html' %}
 
 {% block content %}
-        {% include "clients/info_bar.html" %}
         <h3>All Doctors</h3>
         {% for doctor in all_doctors %}
         <div class="card">
@@ -10,7 +9,7 @@
                         <div class="row">
                                 <div class="col">
                                         <label style="color: #7B1FA2; font-weight: bold;"> Address: </label>{{doctor.address}}<br>
-                                        <label style="color: #7B1FA2; font-weight: bold;"> Email: </label> 
+                                        <label style="color: #7B1FA2; font-weight: bold;"> Email: </label> {{doctor.email}}
                                 </div>
                                 <div class="col">
                                         <label style="color: #7B1FA2; font-weight: bold;"> Phone # 1: </label>{{doctor.phone_1}}<br>

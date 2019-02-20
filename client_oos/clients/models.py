@@ -16,6 +16,7 @@ class Doc(db.Model):
     address = db.CharField(max_length=120, null=True)
     phone_1 = db.PositiveIntegerField(null=True)
     phone_2 = db.PositiveIntegerField(null=True)
+    email = db.EmailField(max_length=120, null=True)
     doc_type = db.CharField(max_length=30, choices=doc_type_choices, null=True)
     #clients = db.ManyToManyField(Client)
 
