@@ -27,10 +27,7 @@ class Doc(db.Model):
     #def __str__(self):
     #    return '%s %s %s' % ( self.doc_type, self.first_name, self.last_name )
     def __str__(self):
-        field_values = []
-        for field in self._meta.get_fields():
-            field_values.append(str(getattr(self, field.name, '')))
-        return ' '.join(field_values)
+        return '%s %s %s' % ( self.doc_type, self.first_name, self.last_name )
 
 
 

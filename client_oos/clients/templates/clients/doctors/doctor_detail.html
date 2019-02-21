@@ -74,9 +74,8 @@
       <div class="container">
           <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#client_details" role="tab" aria-controls="nav-home" aria-selected="true">Client Details</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#device_details" role="tab" aria-controls="nav-profile" aria-selected="false">Device Details</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#doctors_list" role="tab" aria-controls="nav-contact" aria-selected="false">Doctors List</a>
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#doctor_details" role="tab" aria-controls="nav-home" aria-selected="true">Doctor Details</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#contact_details" role="tab" aria-controls="nav-profile" aria-selected="false">Contact Details</a>
               </div>
           </nav>
 
@@ -84,14 +83,17 @@
 	  	<form method="post" action="{% url 'client:doctor_update' doc.pk %}">
       {% csrf_token %}
       <div class='tab-content' id="nav-tabContent">
-			  <div class='form-row tab-pane fade show active' role="tabpanel" id="doctor_details" role="tabpanel">
-          <div class='form-group col-md-4 mb-0'>
-            {{ form.first_name|as_crispy_field }}
-            {{ form.last_name|as_crispy_field }}
-          </div>
+
+			  <div class='form-row tab-pane fade show active' id="doctor_details" role="tabpanel" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class='form-group col-md-4 mb-0'>
+              {{ form.doc_type|as_crispy_field }}
+              {{ form.first_name|as_crispy_field }}
+              {{ form.last_name|as_crispy_field }}
+            </div>
         </div>
 
-        <div class='form-row tab-pane fade' role="tabpanel" id="device_details" role="tabpanel">
+
+        <div class='form-row tab-pane fade' role="tabpanel" id="contact_details" role="tabpanel" aria-labelledby="nav-profile-tab">
           <div class='form-row'>
             <div class='form-group col-md-6 mb-0'>
               {{ form.address|as_crispy_field }}
@@ -101,14 +103,6 @@
               {{ form.phone_1|as_crispy_field }}
               {{ form.phone_2|as_crispy_field }}
             </div>
-          </div>
-        </div>
-
-        <div class='form-row tab-pane fade' role="tabpanel" id="doctors_list" role="tabpanel">
-          <div class='form-group col-md-4 mb-0 '>
-							<div style="overflow-y: scroll; height:400px; border: thin solid black;">
-              doctors!
-							</div>
           </div>
         </div>
 
