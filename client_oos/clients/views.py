@@ -39,7 +39,7 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = ClientForm
   
-
+  
 
 class ClientCreate(CreateView):
     model = Client
