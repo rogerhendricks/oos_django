@@ -28,12 +28,14 @@ class OosForm(forms.ModelForm):
                     'oos_date',
                     'batt_volt',
                     'content',
+                    'oos_file',
                     ]
         labels = {
             'oos_type': 'Service Type',
             'oos_date': 'Service Date',
             'batt_volt': 'Battery Voltage',
             'content': 'Comments',
+            'oos_file':'File Upload',
             }
         widgets = {
             'client': forms.HiddenInput()

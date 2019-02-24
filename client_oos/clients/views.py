@@ -106,13 +106,14 @@ class OosDetailView(DetailView):
 class OosCreate(CreateView):
     template_name = 'clients/oos_create.html'
     model = Oos
-    fields = ['client','oos_date', 'oos_type', 'batt_volt','content', ]
-    #form_class = OosForm
+    #fields = ['client','oos_date', 'oos_type', 'batt_volt','content', 'oos_file']
+    form_class = OosForm
 
+    
 
 class OosUpdateView(UpdateView):
     model = Oos
-    fields = ['oos_date','oos_type', 'batt_volt', 'content']
+    fields = ['oos_date','oos_type', 'batt_volt', 'content', 'oos_file']
     template_name_suffix = '_update_form'
 
 
@@ -164,8 +165,6 @@ class OosCreateNew(CreateView):
         initial = super(OosCreateNew, self).get_initial()
         initial['client'] = self.kwargs.get('pk')
         return initial
-
-
 
 
 

@@ -1,5 +1,6 @@
 from django.db import models as db
 from django.urls import reverse
+from django.core.validators import FileExtensionValidator
 
 
 class Doc(db.Model):
@@ -18,6 +19,7 @@ class Doc(db.Model):
     phone_2 = db.PositiveIntegerField(null=True)
     email = db.EmailField(max_length=120, null=True)
     doc_type = db.CharField(max_length=30, choices=doc_type_choices, null=True)
+    
     #clients = db.ManyToManyField(Client)
 
     class Meta:
@@ -80,6 +82,7 @@ class Oos(db.Model):
     oos_type = db.CharField(max_length=25, choices=oos_type_choices, default='In Clinic Periodic')
     batt_volt = db.DecimalField(max_digits=4, decimal_places=2)
     oos_date = db.DateTimeField()
+    oos_file = db.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'xml'])], null=True)
     client = db.ForeignKey('Client', on_delete=db.CASCADE)
 
     class Meta:
