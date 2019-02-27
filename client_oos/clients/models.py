@@ -83,6 +83,7 @@ class Oos(db.Model):
     batt_volt = db.DecimalField(max_digits=4, decimal_places=2)
     oos_date = db.DateTimeField()
     oos_file = db.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'xml'])], null=True)
+    service_file = db.BinaryField(editable=True, null=True)
     client = db.ForeignKey('Client', on_delete=db.CASCADE)
 
     class Meta:
