@@ -87,7 +87,7 @@
                     
                 </div>
                 <div class="address">
-                        Super Company<br>
+                        {{client_id__first_name}} {{ client_id__last_name }}<br>
                         301 Cobblestone Way<br>
                         Bedrock, 7077<br>
                         super@tech.com  
@@ -95,7 +95,7 @@
                 </div>
                 <p id="header_data">
                     Service Data: {{oos_date}}<br>
-                    Service Type: {{oos_type}} <br>   
+                    Service Type: {{ client }} <br>
                 </p>
         </div>
 
@@ -108,12 +108,17 @@
                 <div class="row">
                     <div class="column">
                     <span><u>Measurements</u></span><br>
-                    Battery Voltage: {{ batt_volt }}<br/>
+                        Battery Voltage: {{ client_id }}<br/>
+                        Battery Voltage: {{ batt_volt }}<br/>
                     </div>
                 
                     <div class="column" >
                     <span><u>Comments</u></span><br>
-                    Comments: {{ content }}<br/>
+                        Comments: {{ oos_type }}<br/>
+                        Battery Voltage: {{ oos.client__last_name }}<br/>
+                        Battery Voltage: {{ last_name }}<br/>
+                        Battery Voltage: {{ oos.client_id__last_name }}<br/>
+                        Battery Voltage: {{client_id__first_name}} {{ client_id__last_name }}<br/>
                     </div> 
                 </div>  
             <hr class='hrItem' />

@@ -73,8 +73,6 @@
 <div>
 <a class="btn btn-secondary" href="{% url 'client:service' oos.client_id %}">Back to Services</a>
 <a class="btn btn-secondary" href="{% url 'client:service_update' oos.pk %}">Update</a>
-<a href="/media/{{ oos.oos_file }}" target="_blank" class="btn btn-primary">Download The PDF</a>
-<a href="{{ oos.service_file }}" target="_blank" class="btn btn-primary">Download The B PDF</a>
 <a class="btn btn-primary" href="{% url 'client:service_pdf' oos.pk %}">PDF</a>
 <a class="btn btn-primary" href="{% url 'client:html' oos.pk %}">html</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>

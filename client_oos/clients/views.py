@@ -16,6 +16,8 @@ from .utils import render_to_pdf
 from django_weasyprint import WeasyTemplateResponseMixin
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
+from django.template import Context
+
 #from crispy_forms.helper import FormHelper
 
 
@@ -71,9 +73,6 @@ class SearchList(ListView):
 
 
 
-
-
-
 # Services
 class OosView(SingleObjectMixin, ListView):
     template_name = 'clients/services_index.html'
@@ -108,8 +107,7 @@ class OosCreate(CreateView):
     model = Oos
     #fields = ['client','oos_date', 'oos_type', 'batt_volt','content', 'oos_file']
     form_class = OosForm
-
-    
+ 
 
 class OosUpdateView(UpdateView):
     model = Oos
@@ -136,7 +134,7 @@ class OosSearchList():
 class GeneratePdf(View):
 
     def get(self, request, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values()[0]
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').values().prefetch_related('client__doctors').values('id', 'batt_volt', 'client_id', 'client_id__last_name','client_id__first_name', 'oos_type')[0]
         pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
@@ -144,13 +142,15 @@ class GeneratePdf(View):
             content = "inline; filename='%s'" %(filename)
             response['Content-Disposition'] = content
             return response
-        return HttpResponse("Not found")
+        return HttpResponse("Error Rendering PDF", status=400)
+
 
 
 class OosDetailPdf(DetailView):
     template_name = 'clients/pdf/pdf_detail.html'
 
     def get_queryset(self, *args, **kwargs):
+
         queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors')
 
         #queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
@@ -165,9 +165,6 @@ class OosCreateNew(CreateView):
         initial = super(OosCreateNew, self).get_initial()
         initial['client'] = self.kwargs.get('pk')
         return initial
-
-
-
 
 
 
