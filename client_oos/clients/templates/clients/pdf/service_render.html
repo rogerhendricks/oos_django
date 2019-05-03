@@ -12,14 +12,11 @@
                     left: 50pt; width: 512pt; top: 50pt; height: 100pt;
                     -pdf-frame-border: 1;
                 }
-                @frame col1_frame {             /* Content frame 1 */
-                    left: 44pt; width: 245pt; top: 150pt; height: 600pt;
+                @frame content_frame {             /* Content frame 1 */
+                    left: 50pt; width: 512pt; top: 150pt; height: 600pt;
                     -pdf-frame-border: 1;
                 }
-                @frame col2_frame {             /* Content frame 2 */
-                    left: 323pt; width: 245pt; top: 150pt; height: 600pt;
-                    -pdf-frame-border: 1;
-                }
+               
                 @frame footer_frame {           /* Static frame */
                     -pdf-frame-content: footer_content;
                     left: 50pt; width: 512pt; top: 772pt; height: 20pt;
@@ -100,30 +97,50 @@
         </div>
 
         <div id="footer_content">
-            (c) bottom the page
+            (c) - page <pdf:pagenumber> of <pdf:pagecount>
         </div>
 
         <!-- HTML Content -->
-        <div class='measurement'>
-                <div class="row">
+        <div class='measurement' id="content_frame">
+            <div>
+            <table>
+                <tr>
+                    <th>Device Details</th>
+                    <th>Measurements</th>
+                </tr>
+                <tr>
+                    <td>Device Type: {{ client_id }}</td>
+                    <td>Device: {{ client_id }}</td>
+                </tr>
+                <tr>
+                    <td>Manufacturer: {{ client_id }}</td>
+                    <td>Battery Voltage: {{ batt_volt }}</td>
+                </tr>
+                <tr>
+                    <td>Model: {{ client_id }}</td>
+                </tr>
+                <tr>
+                    <td>Serial: {{ client_id }}</td>
+                </tr>
+
+            </table>
+            </div>
+                <!-- <div class="row">
                     <div class="column">
                     <span><u>Measurements</u></span><br>
                         Battery Voltage: {{ client_id }}<br/>
                         Battery Voltage: {{ batt_volt }}<br/>
                     </div>
                 
-                    <div class="column" >
+                    <div class="column">
                     <span><u>Comments</u></span><br>
                         Comments: {{ oos_type }}<br/>
-                        Battery Voltage: {{ oos.client__last_name }}<br/>
-                        Battery Voltage: {{ last_name }}<br/>
-                        Battery Voltage: {{ oos.client_id__last_name }}<br/>
                         Battery Voltage: {{client_id__first_name}} {{ client_id__last_name }}<br/>
                     </div> 
-                </div>  
-            <hr class='hrItem' />
+                </div> -->  
+            <hr class='hrItem'/>
         </div>
-        <div id="arrhythmias">
+        <div id="arrhythmias" id="content_frame">
                 <h2 id="columns-title">Big title on left page, with text on columns</h2>
           
                 <h3>This is a little subtitle, here to explain what we are talking about</h3>
@@ -134,6 +151,7 @@
                     Mauris varius orci quam. Nam dui mauris, dictum at elementum at, mollis pulvinar est.
                     Nunc lobortis pharetra erat, id rutrum lorem malesuada in.
                   </p>
+                  <p class="separator">&nbsp;<p>
                   <p>
                     Phasellus id nisl nec arcu tempor ultricies non id tortor. Mauris ex nibh, viverra vitae nisi eget, placerat pharetra est.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id maximus diam. Cras molestie nisl vitae iaculis convallis.
@@ -141,7 +159,6 @@
                     Vivamus sed vulputate risus. Nunc dignissim magna velit, quis lobortis ex volutpat eget.
                     Proin dictum mauris condimentum consequat faucibus.
                   </p>
-                  <p class="separator">&nbsp;<p>
                   <p>
                     Duis maximus mauris ac purus eleifend, sit amet blandit nulla lacinia.
                     Maecenas massa dolor, suscipit at erat eget, maximus dignissim dolor. Praesent consectetur maximus libero, eu facilisis ligula finibus et.

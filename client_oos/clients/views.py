@@ -12,8 +12,7 @@ from django.db.models import Q
 from django.utils import timezone
 import datetime
 from django.http import HttpResponse, HttpResponseRedirect
-from .utils import render_to_pdf
-from django_weasyprint import WeasyTemplateResponseMixin
+#from django_weasyprint import WeasyTemplateResponseMixin
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
 from django.template import Context
@@ -40,8 +39,7 @@ class ClientDetailView(DetailView, DeleteView, CreateView):
     success_url = reverse_lazy('client:index')
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = ClientForm
-  
-  
+    
 
 class ClientCreate(CreateView):
     model = Client
@@ -111,7 +109,8 @@ class OosCreate(CreateView):
 
 class OosUpdateView(UpdateView):
     model = Oos
-    fields = ['oos_date','oos_type', 'batt_volt', 'content', 'oos_file']
+    form_class = OosForm
+    #fields = ['oos_date','oos_type', 'batt_volt', 'content', 'oos_file']
     template_name_suffix = '_update_form'
 
 
@@ -134,7 +133,7 @@ class OosSearchList():
 class GeneratePdf(View):
 
     def get(self, request, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').values().prefetch_related('client__doctors').values('id', 'batt_volt', 'client_id', 'client_id__last_name','client_id__first_name', 'oos_type')[0]
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').values().prefetch_related('client__doctors').values('id', 'batt_volt', 'oos_type', 'client_id', 'client_id__last_name','client_id__first_name')[0]
         pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
@@ -143,18 +142,6 @@ class GeneratePdf(View):
             response['Content-Disposition'] = content
             return response
         return HttpResponse("Error Rendering PDF", status=400)
-
-
-
-class OosDetailPdf(DetailView):
-    template_name = 'clients/pdf/pdf_detail.html'
-
-    def get_queryset(self, *args, **kwargs):
-
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors')
-
-        #queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
-        return queryset
 
 
 class OosCreateNew(CreateView):
@@ -188,7 +175,6 @@ class DoctorView(ListView):
         return Doc.objects.all()
 
 
-
 class DoctorDetailView(DetailView, DeleteView, CreateView):
     model = Doc
     template_name = 'clients/doctors/doctor_detail.html'
@@ -196,14 +182,17 @@ class DoctorDetailView(DetailView, DeleteView, CreateView):
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
 
+
 class DoctorDelete(DeleteView):
     model = Doc
     success_url = reverse_lazy('client:doctor_index')
+
 
 class DoctorUpdate(UpdateView):
     model = Doc
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
+
 
 class DoctorSearchList(ListView):
     template_name = 'clients/doctors/doctor_search.html'
