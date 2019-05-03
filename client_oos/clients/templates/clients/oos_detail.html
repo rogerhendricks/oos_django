@@ -22,8 +22,8 @@
 				<div class="col">
 						<table >
 							<tr><td style="color: #7B1FA2; font-weight: bold;">Battery</td></tr>
-							<tr><td style="color: #7B1FA2;">Battery Voltage: <span style="color: #34495E;">{{oos.batt_volt}}</span></td></tr>
-							<tr><td style="color: #7B1FA2;">Battery Charge Time: <span style="color: #34495E;">{{oos.batt_chg_time}}</span></td></tr>
+							<tr><td style="color: #7B1FA2;">Battery Voltage: <span style="color: #34495E;"><u>{{oos.batt_volt}}</u></span></td></tr>
+							<tr><td style="color: #7B1FA2;">Battery Charge Time: <span style="color: #34495E;"><u>{{oos.batt_chg_time}}</u></span></td></tr>
 						</table>
 				</div>
 				<div class="col">
@@ -92,7 +92,7 @@
 <div>
 <a class="btn btn-secondary" href="{% url 'client:service' oos.client_id %}">Back to Services</a>
 <a class="btn btn-secondary" href="{% url 'client:service_update' oos.pk %}">Update</a>
-<a class="btn btn-primary" href="{% url 'client:service_pdf' oos.pk %}">Generate PDF</a>
+<a class="btn btn-primary" href="{% url 'client:service_pdf' oos.pk %}" target="_blank">Generate PDF</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
 
 </div>
