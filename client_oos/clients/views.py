@@ -16,6 +16,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
 from django.template import Context
+from .external import externalTest
 
 #from crispy_forms.helper import FormHelper
 
@@ -33,12 +34,13 @@ class ClientView(ListView):
         return Client.objects.all()
 
 
-class ClientDetailView(DetailView, DeleteView, CreateView):
+class ClientDetailView(DetailView, DeleteView, CreateView, externalTest):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = ClientForm
+   
     
 
 class ClientCreate(CreateView):
@@ -153,6 +155,13 @@ class OosCreateNew(CreateView):
         initial['client'] = self.kwargs.get('pk')
         return initial
 
+
+class xmlView(View):
+    greeting = "Good Day"
+
+    def get(self, request):
+        return HttpResponse(self.greeting)
+   
 
 
 
