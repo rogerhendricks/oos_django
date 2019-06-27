@@ -12,11 +12,14 @@ from django.db.models import Q
 from django.utils import timezone
 import datetime
 from django.http import HttpResponse, HttpResponseRedirect
-#from django_weasyprint import WeasyTemplateResponseMixin
+from django_weasyprint import WeasyTemplateResponseMixin, WeasyTemplateView
+
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
 from django.template import Context
 from .external import externalTest
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
 
 #from crispy_forms.helper import FormHelper
 
@@ -133,9 +136,11 @@ class OosSearchList():
 
 # adding service render to pdf xhtmltopdf2
 class GeneratePdf(View):
-
     def get(self, request, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').values().prefetch_related('client__doctors').values('id', 'batt_volt', 'oos_type', 'client_id', 'client_id__last_name','client_id__first_name')[0]
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors').values().values('id', 'batt_volt', 'oos_type',
+                                                                                                                                             'client_id', 'client_id__last_name','client_id__first_name',
+                                                                                                                                             'client_id__doctors__id', 'client_id__doctors__first_name',
+                                                                                                                                             'client_id__doctors__last_name')[0]
         pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
@@ -144,6 +149,21 @@ class GeneratePdf(View):
             response['Content-Disposition'] = content
             return response
         return HttpResponse("Error Rendering PDF", status=400)
+
+class PrintPdf(View):
+    def get(self, request, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related(
+            'client__doctors').values().values('id', 'batt_volt', 'oos_type', 'oos_date',
+                                               'client_id', 'client_id__last_name', 'client_id__first_name',
+                                               'client_id__doctors__id', 'client_id__doctors__first_name',
+                                               'client_id__doctors__last_name', 'client_id__doctors__address')[0]
+        html_template = render_to_string('clients/pdf/pdf_detail.html', queryset)
+
+        pdf_file = HTML(string=html_template).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="home_page.pdf"'
+        return response
+
 
 
 class OosCreateNew(CreateView):

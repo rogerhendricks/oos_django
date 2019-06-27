@@ -42,8 +42,6 @@ class OosForm(forms.ModelForm):
                     'shock_imp_rv',
                     'shock_imp_svc',
                     'content',
-                    'oos_file',
-                    'service_file',
                     ]
         labels = {
             'oos_type': 'Service Type',
@@ -64,8 +62,6 @@ class OosForm(forms.ModelForm):
             'shock_imp_rv':'RV Shock Pacing Impedance',
             'shock_imp_svc':'SVC Shock Pacing Impedance',
             'content': 'Comments',
-            'oos_file':'File Upload',
-            'service_file':'Service File',
             }
         widgets = {
             'client': forms.HiddenInput()

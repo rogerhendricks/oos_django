@@ -80,7 +80,7 @@
 		<div class="card-body">
 			<p>
 				{{oos.content}}<br>
-			<a href="{{ oos.oos_file }}" target="_blank" class="btn btn-primary">Download The PDF</a>
+			<a href="{% url 'client:service_html_pdf' oos.pk %}" target="_blank" class="btn btn-primary">Download The PDF</a>
 			</p>
 		</div>
 	  </div>

@@ -94,11 +94,8 @@ class Oos(db.Model):
     pace_imp_rv = db.IntegerField(validators=[MinValueValidator(150), MaxValueValidator(3000)], null=True)
     pace_thr_rv = db.DecimalField(max_digits=4, decimal_places=2, null=True)
     pace_thr_pw_rv = db.DecimalField(max_digits=4, decimal_places=2, null=True)
-    shock_imp_rv = db.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(200)], null=True)
-    shock_imp_svc = db.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(200)], null=True)
-
-    oos_file = db.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'xml'])], null=True)
-    service_file = db.BinaryField(editable=True, null=True)
+    shock_imp_rv = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], null=True)
+    shock_imp_svc = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], null=True)
     client = db.ForeignKey('Client', on_delete=db.CASCADE)
 
     class Meta:
