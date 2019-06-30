@@ -1,5 +1,6 @@
 from django.db import models as db
 from django.urls import reverse
+from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator
 
 
 class Doc(db.Model):
@@ -18,6 +19,7 @@ class Doc(db.Model):
     phone_2 = db.PositiveIntegerField(null=True)
     email = db.EmailField(max_length=120, null=True)
     doc_type = db.CharField(max_length=30, choices=doc_type_choices, null=True)
+    
     #clients = db.ManyToManyField(Client)
 
     class Meta:
@@ -79,7 +81,21 @@ class Oos(db.Model):
     content = db.TextField(max_length=500)
     oos_type = db.CharField(max_length=25, choices=oos_type_choices, default='In Clinic Periodic')
     batt_volt = db.DecimalField(max_digits=4, decimal_places=2)
+    batt_chg_time = db.DecimalField(max_digits=4, decimal_places=2, null=True)
     oos_date = db.DateTimeField()
+    paced_percent_ra = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True)
+    paced_percent_rv = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True)
+    paced_percent_lv = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True)
+    intra_amp_ra = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    pace_imp_ra = db.IntegerField(validators=[MinValueValidator(150), MaxValueValidator(3000)], null=True)
+    pace_thr_ra = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    pace_thr_pw_ra = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    intra_amp_rv = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    pace_imp_rv = db.IntegerField(validators=[MinValueValidator(150), MaxValueValidator(3000)], null=True)
+    pace_thr_rv = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    pace_thr_pw_rv = db.DecimalField(max_digits=4, decimal_places=2, null=True)
+    shock_imp_rv = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], null=True)
+    shock_imp_svc = db.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], null=True)
     client = db.ForeignKey('Client', on_delete=db.CASCADE)
 
     class Meta:

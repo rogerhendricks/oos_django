@@ -65,7 +65,7 @@ client_oos/clients/static/
 \.vscode/
 
 client_oos/client_oos/
-
+client_oos/media/
 # Sphinx documentation
 docs/_build/
 

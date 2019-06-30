@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
-from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosDetailPdf, OosCreateNew, DoctorCreate, DoctorView, DoctorDetailView, DoctorDelete, DoctorUpdate, DoctorSearchList
+from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosCreateNew, DoctorCreate, DoctorView, DoctorDetailView, DoctorDelete, DoctorUpdate, DoctorSearchList, xmlView, PrintPdf
 from django.conf import settings
 
 
@@ -23,11 +23,12 @@ urlpatterns = [
     path('client/<int:pk>/service', OosView.as_view(), name='service'),
     path('client/<int:client.pk>/service/<int:pk>/detail', OosDetailView.as_view(), name='service_detail'),
     path('client/<int:client.pk>/service/<int:pk>/detail/pdf/', GeneratePdf.as_view(), name='service_pdf'),
-    path('client/<int:client.pk>/service/<int:pk>/detail/html/', OosDetailPdf.as_view(), name='html'),
+    path('client/<int:client.pk>/service/<int:pk>/detail/pdf_html/', PrintPdf.as_view(), name='service_html_pdf'),
     path('client/service/add', OosCreate.as_view(), name='service_add'),
     path('client/<int:pk>/service/add', OosCreateNew.as_view(), name='service_new'),
     path('client/<int:client.pk>/service/<int:pk>/update', OosUpdateView.as_view(), name='service_update'),
     path('client/<int:pk>/service/<int:oos.pk>/delete', OosDelete.as_view(), name='service_delete'),
+    path('client/<int:pk>/service/<int:oos.pk>/xml', xmlView.as_view()),
     # /doctors
     path('doctor/new/',DoctorCreate.as_view() , name='doctor_new'),
     path('doctor/list', DoctorView.as_view(), name='doctor_index'),

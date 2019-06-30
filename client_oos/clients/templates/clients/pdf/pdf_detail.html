@@ -1,116 +1,209 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% load static %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/print.css' %}">
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <title>Service {{oos.oos_date}}</title>
-</head>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <meta name="description" content="Invoice demo sample">
+    <meta name="author" content="Roger">
+      {% load static %}
+    <title>Report</title>
+      <link rel="stylesheet" href="{% static 'css/pdf_detail.css' %}">
+      <style>
+        @charset "UTF-8";
+        @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:400,700");
+        @page {
+          margin: 3cm;
+          @bottom-left {
+            color: #1ee494;
+            font-family: Pacifico;
+            content: '♥ Thank you!'; }
+          @bottom-right {
+            color: #a9a;
+            content: 'community@Core-EP | 555 5555 | community.Core-EP.com';
+            font-family: Pacifico;
+            font-size: 9pt; } }
+
+        html {
+          color: #14213d;
+          font-family: Source Sans Pro;
+          font-size: 11pt;
+          line-height: 1.6; }
+          html body {
+            margin: 0; }
+          html h1 {
+            color: #1ee494;
+            font-family: Pacifico;
+            font-size: 40pt;
+            margin: 0; }
+          html aside {
+            display: flex;
+            margin: 2em 0 4em; }
+            html aside address {
+              font-style: normal;
+              white-space: pre-line; }
+              html aside address#from {
+                color: #a9a;
+                flex: 1; }
+              html aside address#to {
+                text-align: right; }
+          html dl {
+            text-align: right;
+            position: absolute;
+            right: 0;
+            top: 0; }
+            html dl dt, html dl dd {
+              display: inline;
+              margin: 0; }
+            html dl dt {
+              color: #a9a; }
+              html dl dt::before {
+                content: '';
+                display: block; }
+              html dl dt::after {
+                content: ':'; }
+          html table {
+            border-collapse: collapse;
+            width: 100%; }
+            html table th {
+              border-bottom: .2mm solid #a9a;
+              color: #a9a;
+              font-size: 10pt;
+              font-weight: 400;
+              padding-bottom: .25cm;
+              text-transform: uppercase; }
+            html table td {
+              padding-top: 7mm; }
+              html table td:last-of-type {
+                color: #1ee494;
+                font-weight: bold;
+                text-align: right; }
+            html table th, html table td {
+              text-align: center; }
+              html table th:first-of-type, html table td:first-of-type {
+                text-align: left; }
+              html table th:last-of-type, html table td:last-of-type {
+                text-align: right; }
+            html table#total {
+              background: #f6f6f6;
+              border-color: #f6f6f6;
+              border-style: solid;
+              border-width: 2cm 3cm;
+              bottom: 0;
+              font-size: 20pt;
+              margin: 0 -3cm;
+              position: absolute;
+              width: 18cm; }
+            .row {
+              display: flex;
+              }
+            .column {
+              flex: 50%;
+            }
+          </style>
+  </head>
 
 
-<body>
-    <!-- Letterhead -->
-     <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <img src="/static/images/logo_electrophysiology.jpg" alt="Cardiac Unit" height="106" width="275">
-            </div>
-            <div class="col-sm">
-                <h4>{{oos.oos_type}}</h4>
-                <h4></h4>{{oos.oos_date}}</h4>
-            </div>
-            <div class="col-sm">
-                <img src="/static/images/wslhd_header.png" alt="WSLH" height="97.5" width="349">
-            </div>
+  <body>
+  {% block content %}
+    <h1>Report</h1>
+
+    <aside>
+      <address id="from">
+          {{client_id__doctors__first_name}} {{client_id__doctors__last_name}}
+        {{client_id__doctors__address}}
+        New South Wales, Australia
+      </address>
+
+      <address id="to">
+        Our awesome technicians
+        From all around the world
+      </address>
+    </aside>
+
+    <dl id="informations">
+      <dt>Invoice number</dt>
+      <dd>12345</dd>
+      <dt>Date</dt>
+      <dd>{{oos_date}}</dd>
+    </dl>
+    <div class="row">
+      <div class="column">
+        <table>
+          <thead>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Website design</td>
+              <td>€34.20</td>
+              <td>100</td>
+              <td>€3,420.00</td>
+            </tr>
+            <tr>
+              <td>Website development</td>
+              <td>€45.50</td>
+              <td>100</td>
+              <td>€4,550.00</td>
+            </tr>
+            <tr>
+              <td>Website integration</td>
+              <td>€25.75</td>
+              <td>100</td>
+              <td>€2,575.00</td>
+            </tr>
+          </tbody>
+        </table>
         </div>
-    </div>
-    <!-- Letterhead -->
 
-
-    <!-- Addresses & Demographic Details -->
-    <div class="container">
-            <div class="row">
-                    <div class="col mt-5">
-                        <div>
-                            <p>Patient Name: {{oos.client.first_name}} {{oos.client.last_name}}</p>
-                            <p>Patient ID: {{oos.client.id}}</p>
-                        
-                            <p>Doctor: {{oos.client.doctors.last_name}}</p>
-                        </div>
-                    </div>
-                   
-                    <div class="col my-5 text-right">
-                        <address>
-                            Cardiac Unit, Clinical Measurements<br> 
-                            Level 2, Westmead Hospital<br>
-                            Cnr Hawkbury Rd & Darcy<br>
-                            Westmead, NSW 2145
-                        </address>
-                    </div>
-                </div>
-    </div>
-    <!-- Addresses & Demographic Details -->
-
-
-    <!-- Measurements -->
-    <div class="container">
-            <hr>
-            <!-- Device Measuremnts-->
-            <div class="row">
-                <div class="col-sm">
-                    {{ oos.content }}
-                </div>
-                <div class="col-sm">
-                    {{oos.client.id}}<br>
-                    {{oos.client.first_name}} {{oos.client.last_name}}
-                </div>
-                <div class="col-sm">
-                    {{oos.batt_volt}}<br>
-                </div>
-            </div>
-            <hr>
-            <!-- Arrhythmias -->
-            <div class="row">
-                <div class="col-sm">
-                    {{ oos.content }}
-                </div>
-                <div class="col-sm">
-                    {{oos.client.id}}<br>
-                    {{oos.client.first_name}} {{oos.client.last_name}}
-                </div>
-                <div class="col-sm">
-                    {{oos.batt_volt}}<br>
-                </div>
-            </div>
-            <hr>
-            <!-- Comments -->
-            <div class="row">
-                <div class="col-sm">
-                    {{ oos.content }}
-                </div>
-            </div>
-          
-    </div>
-    <!-- Measurements -->
-    
-    <!-- Footer -->
-    <div class="container">
-        <div class="navbar navbar-light bg-light navbar-static-bottom navbar-fixed-bottom">
-            <div class="container">
-                Cardiac Physiologist:
-                <span> Cardiac Unit, Westmead Hospital, Westmead NSW, 2145</span>
-            </div>
+        <div class="column">
+          <table>
+            <thead>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Website design</td>
+                <td>€34.20</td>
+                <td>100</td>
+                <td>€3,420.00</td>
+              </tr>
+              <tr>
+                <td>Website development</td>
+                <td>€45.50</td>
+                <td>100</td>
+                <td>€4,550.00</td>
+              </tr>
+              <tr>
+                <td>Website integration</td>
+                <td>€25.75</td>
+                <td>100</td>
+                <td>€2,575.00</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-    </div>
-    <!-- Footer -->
+      </div>
 
 
-</body>
+    <table id="total">
+      <thead>
+        <th>Due by</th>
+        <th>Account number</th>
+        <th>Total due</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>May 10, 2018</td>
+          <td>132 456 789 012</td>
+          <td>€10,545.00</td>
+        </tr>
+      </tbody>
+    </table>
+  {% endblock %}
+  </body>
 </html>

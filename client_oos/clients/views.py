@@ -12,10 +12,15 @@ from django.db.models import Q
 from django.utils import timezone
 import datetime
 from django.http import HttpResponse, HttpResponseRedirect
-from .utils import render_to_pdf
-from django_weasyprint import WeasyTemplateResponseMixin
+from django_weasyprint import WeasyTemplateResponseMixin, WeasyTemplateView
+
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
+from django.template import Context
+from .external import externalTest
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
 #from crispy_forms.helper import FormHelper
 
 
@@ -32,14 +37,14 @@ class ClientView(ListView):
         return Client.objects.all()
 
 
-class ClientDetailView(DetailView, DeleteView, CreateView):
+class ClientDetailView(DetailView, DeleteView, CreateView, externalTest):
     model = Client
     template_name = 'clients/detail.html'
     success_url = reverse_lazy('client:index')
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = ClientForm
-  
-  
+   
+    
 
 class ClientCreate(CreateView):
     model = Client
@@ -67,9 +72,6 @@ class SearchList(ListView):
         search = self.request.GET.get('search')
         queryset = Client.objects.filter(Q(last_name__icontains=search)|Q(first_name__icontains=search)|Q(record_number__icontains=search))
         return queryset
-
-
-
 
 
 
@@ -106,13 +108,14 @@ class OosDetailView(DetailView):
 class OosCreate(CreateView):
     template_name = 'clients/oos_create.html'
     model = Oos
-    fields = ['client','oos_date', 'oos_type', 'batt_volt','content', ]
-    #form_class = OosForm
-
+    #fields = ['client','oos_date', 'oos_type', 'batt_volt','content', 'oos_file']
+    form_class = OosForm
+ 
 
 class OosUpdateView(UpdateView):
     model = Oos
-    fields = ['oos_date','oos_type', 'batt_volt', 'content']
+    form_class = OosForm
+    #fields = ['oos_date','oos_type', 'batt_volt', 'content', 'oos_file']
     template_name_suffix = '_update_form'
 
 
@@ -133,9 +136,11 @@ class OosSearchList():
 
 # adding service render to pdf xhtmltopdf2
 class GeneratePdf(View):
-
     def get(self, request, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).values()[0]
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors').values().values('id', 'batt_volt', 'oos_type',
+                                                                                                                                             'client_id', 'client_id__last_name','client_id__first_name',
+                                                                                                                                             'client_id__doctors__id', 'client_id__doctors__first_name',
+                                                                                                                                             'client_id__doctors__last_name')[0]
         pdf = render_to_pdf('clients/pdf/service_render.html', queryset)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
@@ -143,17 +148,22 @@ class GeneratePdf(View):
             content = "inline; filename='%s'" %(filename)
             response['Content-Disposition'] = content
             return response
-        return HttpResponse("Not found")
+        return HttpResponse("Error Rendering PDF", status=400)
 
+class PrintPdf(View):
+    def get(self, request, *args, **kwargs):
+        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related(
+            'client__doctors').values().values('id', 'batt_volt', 'oos_type', 'oos_date',
+                                               'client_id', 'client_id__last_name', 'client_id__first_name',
+                                               'client_id__doctors__id', 'client_id__doctors__first_name',
+                                               'client_id__doctors__last_name', 'client_id__doctors__address')[0]
+        html_template = render_to_string('clients/pdf/pdf_detail.html', queryset)
 
-class OosDetailPdf(DetailView):
-    template_name = 'clients/pdf/pdf_detail.html'
+        pdf_file = HTML(string=html_template).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="home_page.pdf"'
+        return response
 
-    def get_queryset(self, *args, **kwargs):
-        queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related('client__doctors')
-
-        #queryset = Oos.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
-        return queryset
 
 
 class OosCreateNew(CreateView):
@@ -166,10 +176,12 @@ class OosCreateNew(CreateView):
         return initial
 
 
+class xmlView(View):
+    greeting = "Good Day"
 
-
-
-
+    def get(self, request):
+        return HttpResponse(self.greeting)
+   
 
 
 
@@ -192,7 +204,6 @@ class DoctorView(ListView):
         return Doc.objects.all()
 
 
-
 class DoctorDetailView(DetailView, DeleteView, CreateView):
     model = Doc
     template_name = 'clients/doctors/doctor_detail.html'
@@ -200,14 +211,17 @@ class DoctorDetailView(DetailView, DeleteView, CreateView):
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
 
+
 class DoctorDelete(DeleteView):
     model = Doc
     success_url = reverse_lazy('client:doctor_index')
+
 
 class DoctorUpdate(UpdateView):
     model = Doc
     #fields= ['record_number','first_name', 'last_name', 'dob', 'device_man', 'device_name', 'implant_date', 'device_serial', 'bol_voltage','eri_voltage']
     form_class = DocForm
+
 
 class DoctorSearchList(ListView):
     template_name = 'clients/doctors/doctor_search.html'
