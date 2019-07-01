@@ -7,7 +7,7 @@
 	<h4>{{doc.first_name}} {{doc.last_name}}</h4>
 	<div class="row">
 		<div class="col">
-			<label style="color: #7B1FA2; font-weight: bold;">Address: </label> {{doc.address}}
+			<label style="color: #7B1FA2; font-weight: bold;">Address: </label> {{doc.str_address}}
 			<br>
 			<label style="color: #7B1FA2; font-weight: bold;">Email: </label> {{doc.email}}
 			<br>
@@ -96,7 +96,7 @@
         <div class='form-row tab-pane fade' role="tabpanel" id="contact_details" role="tabpanel" aria-labelledby="nav-profile-tab">
           <div class='form-row'>
             <div class='form-group col-md-6 mb-0'>
-              {{ form.address|as_crispy_field }}
+              {{ form.str_address|as_crispy_field }}
               {{ form.email|as_crispy_field }}
             </div>
             <div class='form-group col-md-6 mb-0'>
