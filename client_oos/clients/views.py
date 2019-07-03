@@ -160,7 +160,7 @@ class PrintPdf(View):
                                                'client_id__doctors__st_address', 'client_id__doctors__ct_address','client_id__doctors__pc_address')[0]
         html_template = render_to_string('clients/pdf/pdf_detail.html', queryset)
 
-        pdf_file = HTML(string=html_template).write_pdf()
+        pdf_file = HTML(string=html_template, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = 'filename="home_page.pdf"'
         return response
