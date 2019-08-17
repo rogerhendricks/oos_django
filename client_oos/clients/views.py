@@ -177,7 +177,7 @@ class OosCreateNew(CreateView):
         return initial
 
 
-class xmlView(View):
+class importDataView(View):
     greeting = "Good Day"
 
     def get(self, request):
