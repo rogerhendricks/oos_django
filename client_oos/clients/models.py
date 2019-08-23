@@ -10,11 +10,23 @@ class Doc(db.Model):
         ('Cardiologist','Cardiologist'),
         ('General Practitioner','General Practitioner'),
     )
+    state_choices = (
+        ('New South Wales','New South Wales'),
+        ('Queensland','Queensland'),
+        ('Victoria','Victoria'),
+        ('Canberra','Canberra'),
+        ('Northern Territory','Northern Territory'),
+        ('Western Australia','Western Australia'),
+        ('South Australia','South Australia'),
+    )
 
     id = db.AutoField(primary_key=True)
     first_name = db.CharField(max_length=30)
     last_name = db.CharField(max_length=30)
-    address = db.CharField(max_length=120, null=True)
+    str_address = db.CharField(max_length=120, null=True)
+    ct_address = db.CharField(max_length=120, null=True)
+    pc_address = db.PositiveIntegerField(null=True)
+    st_address = db.CharField(max_length=30, choices=state_choices, null=True)
     phone_1 = db.PositiveIntegerField(null=True)
     phone_2 = db.PositiveIntegerField(null=True)
     email = db.EmailField(max_length=120, null=True)

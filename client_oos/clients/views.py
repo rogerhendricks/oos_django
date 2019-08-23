@@ -156,10 +156,11 @@ class PrintPdf(View):
             'client__doctors').values().values('id', 'batt_volt', 'oos_type', 'oos_date',
                                                'client_id', 'client_id__last_name', 'client_id__first_name',
                                                'client_id__doctors__id', 'client_id__doctors__first_name',
-                                               'client_id__doctors__last_name', 'client_id__doctors__address')[0]
+                                               'client_id__doctors__last_name', 'client_id__doctors__str_address',
+                                               'client_id__doctors__st_address', 'client_id__doctors__ct_address','client_id__doctors__pc_address')[0]
         html_template = render_to_string('clients/pdf/pdf_detail.html', queryset)
 
-        pdf_file = HTML(string=html_template).write_pdf()
+        pdf_file = HTML(string=html_template, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = 'filename="home_page.pdf"'
         return response
@@ -176,7 +177,7 @@ class OosCreateNew(CreateView):
         return initial
 
 
-class xmlView(View):
+class importDataView(View):
     greeting = "Good Day"
 
     def get(self, request):

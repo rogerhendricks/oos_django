@@ -1,121 +1,30 @@
-<!doctype html>
+{% load static %}
 <html>
   <head>
     <meta charset="utf-8">
-      <meta name="description" content="Invoice demo sample">
-    <meta name="author" content="Roger">
-      {% load static %}
     <title>Report</title>
-      <link rel="stylesheet" href="{% static 'css/pdf_detail.css' %}">
-      <style>
-        @charset "UTF-8";
-        @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:400,700");
-        @page {
-          margin: 3cm;
-          @bottom-left {
-            color: #1ee494;
-            font-family: Pacifico;
-            content: '♥ Thank you!'; }
-          @bottom-right {
-            color: #a9a;
-            content: 'community@Core-EP | 555 5555 | community.Core-EP.com';
-            font-family: Pacifico;
-            font-size: 9pt; } }
-
-        html {
-          color: #14213d;
-          font-family: Source Sans Pro;
-          font-size: 11pt;
-          line-height: 1.6; }
-          html body {
-            margin: 0; }
-          html h1 {
-            color: #1ee494;
-            font-family: Pacifico;
-            font-size: 40pt;
-            margin: 0; }
-          html aside {
-            display: flex;
-            margin: 2em 0 4em; }
-            html aside address {
-              font-style: normal;
-              white-space: pre-line; }
-              html aside address#from {
-                color: #a9a;
-                flex: 1; }
-              html aside address#to {
-                text-align: right; }
-          html dl {
-            text-align: right;
-            position: absolute;
-            right: 0;
-            top: 0; }
-            html dl dt, html dl dd {
-              display: inline;
-              margin: 0; }
-            html dl dt {
-              color: #a9a; }
-              html dl dt::before {
-                content: '';
-                display: block; }
-              html dl dt::after {
-                content: ':'; }
-          html table {
-            border-collapse: collapse;
-            width: 100%; }
-            html table th {
-              border-bottom: .2mm solid #a9a;
-              color: #a9a;
-              font-size: 10pt;
-              font-weight: 400;
-              padding-bottom: .25cm;
-              text-transform: uppercase; }
-            html table td {
-              padding-top: 7mm; }
-              html table td:last-of-type {
-                color: #1ee494;
-                font-weight: bold;
-                text-align: right; }
-            html table th, html table td {
-              text-align: center; }
-              html table th:first-of-type, html table td:first-of-type {
-                text-align: left; }
-              html table th:last-of-type, html table td:last-of-type {
-                text-align: right; }
-            html table#total {
-              background: #f6f6f6;
-              border-color: #f6f6f6;
-              border-style: solid;
-              border-width: 2cm 3cm;
-              bottom: 0;
-              font-size: 20pt;
-              margin: 0 -3cm;
-              position: absolute;
-              width: 18cm; }
-            .row {
-              display: flex;
-              }
-            .column {
-              flex: 50%;
-            }
-          </style>
-  </head>
-
+    <meta name="description" content="Device Report">
+    <meta name="author" content="Roger">
+    <link rel="stylesheet" href="{% static 'css/report.css' %}">
+</head>
 
   <body>
-  {% block content %}
-    <h1>Report</h1>
+    {% block content %}
+    <img src="{% static 'images/logo_electrophysiology.jpg' %}" style="width:260px;height:95px;" />
+    <h1>Device Report</h1>
 
     <aside>
       <address id="from">
-          {{client_id__doctors__first_name}} {{client_id__doctors__last_name}}
-        {{client_id__doctors__address}}
-        New South Wales, Australia
+        {{client_id__doctors__first_name}} {{client_id__doctors__last_name}}
+        {{client_id__doctors__str_address}}
+        {{client_id__doctors__ct_address}} 
+        {{client_id__doctors__st_address}} {{client_id__doctors__pc_address}}
       </address>
 
       <address id="to">
-        Our awesome technicians
-        From all around the world
+        Cardiac Unit
+        Westmead Public Hospital
+        Westmead, NSW AU 2145
       </address>
     </aside>
 
@@ -123,71 +32,91 @@
       <dt>Invoice number</dt>
       <dd>12345</dd>
       <dt>Date</dt>
-      <dd>{{oos_date}}</dd>
+      <dd>March 31, 2018</dd>
     </dl>
+
     <div class="row">
       <div class="column">
         <table>
           <thead>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
+            <th>Patient Details</th>
           </thead>
           <tbody>
             <tr>
-              <td>Website design</td>
-              <td>€34.20</td>
-              <td>100</td>
-              <td>€3,420.00</td>
-            </tr>
-            <tr>
-              <td>Website development</td>
-              <td>€45.50</td>
-              <td>100</td>
-              <td>€4,550.00</td>
-            </tr>
-            <tr>
-              <td>Website integration</td>
-              <td>€25.75</td>
-              <td>100</td>
-              <td>€2,575.00</td>
+              <td>Patient Name:</td>
+              <td>Joe Blow</td>
+              <td>Device Type:</td>
+              <td>Pacemaker</td>
             </tr>
           </tbody>
         </table>
-        </div>
-
-        <div class="column">
-          <table>
-            <thead>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Website design</td>
-                <td>€34.20</td>
-                <td>100</td>
-                <td>€3,420.00</td>
-              </tr>
-              <tr>
-                <td>Website development</td>
-                <td>€45.50</td>
-                <td>100</td>
-                <td>€4,550.00</td>
-              </tr>
-              <tr>
-                <td>Website integration</td>
-                <td>€25.75</td>
-                <td>100</td>
-                <td>€2,575.00</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
+    </div>
+    <hr>
+    <div class= "row">
+      <div class = "column">
+        <table>
+          <thead>
+            <th>Measurements</th>
+            <table>
+              <thead>
+                <th>Brady leads</th>
+                <th>RA Lead</th>
+                <th>RV Lead</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Impedance:</td>
+                  <td>200</td>
+                  <td>500</td>
+                </tr>
+                <tr>
+                  <td>Threshold:</td>
+                  <td>0.5@0.4</td>
+                  <td>0.5@0.4</td>
+                </tr>
+                <tr>
+                  <td>Amplitude</td>
+                  <td>5.6</td>
+                  <td>12</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="column">
+        <table style="margin-left: 10px">
+          <thead>
+            <th>Device Status</th>
+            <th></th>  
+          </thead>
+          <tbody>
+            <tr>
+              <td>Status</td>
+              <td>OK</td>
+            </tr>
+            <tr>
+              <td>Battery Status</td>
+              <td>
+        					<div class="progress-bar horizontal rounded">
+      					    <div class="progress-track">
+      					      <div class="progress-fill" style="width:60%;">
+      					        <span>OK 60%</span>
+      					      </div>
+      					    </div>
+        					</div>
+              </td>
+            </tr>
+            <tr>
+              <td>Battery Voltage</td>
+              <td>
+                3.09
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
 
 
     <table id="total">
@@ -204,6 +133,6 @@
         </tr>
       </tbody>
     </table>
-  {% endblock %}
   </body>
+  {% endblock %}
 </html>

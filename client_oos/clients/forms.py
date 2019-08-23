@@ -78,4 +78,16 @@ class SearchForm(forms.ModelForm):
 class DocForm(forms.ModelForm):
     class Meta: 
         model = Doc
-        fields = ('doc_type','first_name','last_name','address','phone_1','phone_2', 'email')
+        fields = ('doc_type','first_name','last_name','str_address','ct_address','pc_address','st_address','phone_1','phone_2', 'email')
+        labels = {
+            'doc_type': 'Doctor Type',
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'str_address': 'Street',
+            'ct_address': 'City',
+            'pc_address':'Post Code',
+            'st_address': 'State',
+            'phone_1': 'Phone 1',
+            'phone_2': 'Phone 2',
+            'email': 'Email'
+            }
