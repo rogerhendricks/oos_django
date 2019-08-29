@@ -1,5 +1,5 @@
 from django import forms
-from .models import Client, Oos, Doc
+from .models import Client, Oos, Doc, Procedure
 
 
     
@@ -90,4 +90,17 @@ class DocForm(forms.ModelForm):
             'phone_1': 'Phone 1',
             'phone_2': 'Phone 2',
             'email': 'Email'
+            }
+
+class ProcedureForm(forms.ModelForm):
+    class Meta:
+        model = Procedure
+        fields = {'client','procedure_date','procedure_type','content'}
+        labels = {
+            'procedure_type':'Procedure Type',
+            'procedure_date': 'Procedure Date',
+            'content': 'Comments'
+        }
+        widgets = {
+            'client': forms.HiddenInput()
             }

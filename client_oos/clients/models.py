@@ -119,3 +119,29 @@ class Oos(db.Model):
     def __str__(self):
         return self.oos_type
 
+
+class Procedure(db.Model):
+
+    procedure_type_choices = (
+        ('Ischaemic VT Ablation', 'Ischaemic VT Ablation'),
+        ('Idiopathic VT Ablation', 'Idiopathic VT Ablation'),
+        ('Pulmonary Vein Isolation','Pulmonary Vein Isolation'),
+        ('SVT Ablation','SVT Ablation'),
+        ('Diagnostic','Diagnostic'),
+    )
+
+    # columns!
+    id = db.AutoField(primary_key=True)
+    content = db.TextField(max_length=500)
+    procedure_type = db.CharField(max_length=50, choices=procedure_type_choices, default='Diagnostic')
+    procedure_date = db.DateTimeField()
+    client = db.ForeignKey('Client', on_delete=db.CASCADE)
+
+    class Meta:
+        ordering = ('-procedure_date',)
+
+    def get_absolute_url(self):
+        return reverse('client:detail', kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.procedure_type

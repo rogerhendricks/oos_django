@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, View
 from django.views.generic.detail import SingleObjectMixin
-from .models import Client, Oos, Doc
+from .models import Client, Oos, Doc, Procedure
 from django.http import HttpResponse
 from .utils import render_to_pdf
 from django.shortcuts import redirect
-from .forms import SearchForm, ClientForm, OosForm, DocForm
+from .forms import SearchForm, ClientForm, OosForm, DocForm, ProcedureForm
 from django.contrib import messages
 from django.urls import	reverse_lazy, reverse
 from django.db.models import Q
@@ -20,6 +20,8 @@ from django.template import Context
 from .external import externalTest
 from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
+
+from itertools import chain
 
 #from crispy_forms.helper import FormHelper
 
@@ -76,6 +78,8 @@ class SearchList(ListView):
 
 
 
+
+
 # Services
 class OosView(SingleObjectMixin, ListView):
     template_name = 'clients/services_index.html'
@@ -94,8 +98,10 @@ class OosView(SingleObjectMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.object.oos_set.all()
-
+        queryset1 = self.object.oos_set.all()
+        queryset2 = self.object.procedure_set.all()
+        queryset = list (chain(queryset1, queryset2))
+        return queryset
 
 class OosDetailView(DetailView):
     template_name = 'clients/oos_detail.html'
@@ -166,7 +172,6 @@ class PrintPdf(View):
         return response
 
 
-
 class OosCreateNew(CreateView):
     template_name = 'clients/oos_create.html'
     form_class = OosForm
@@ -185,7 +190,16 @@ class importDataView(View):
    
 
 
-
+# Procedures
+class procedureCreate(CreateView):
+    
+    template_name = 'clients/procedures/procedure_create.html'
+    model = Procedure
+    form_class = ProcedureForm
+    def get_initial(self, **kwargs):
+        initial = super(procedureCreate, self).get_initial()
+        initial['client'] = self.kwargs.get('pk')
+        return initial
 
 # Doctors
 

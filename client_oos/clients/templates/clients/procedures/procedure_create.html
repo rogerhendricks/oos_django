@@ -1,0 +1,10 @@
+{% extends 'clients/base.html' %}
+
+{% block content %}
+    <h5>Add a Procedure</h5>
+    <form method="POST" class="new-form" enctype="multipart/form-data">
+        {% csrf_token %}
+       {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Create</button>
+    </form>
+{% endblock %}
