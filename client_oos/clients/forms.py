@@ -16,7 +16,6 @@ class ClientForm(forms.ModelForm):
     
 
 
-
 class OosForm(forms.ModelForm):
    class Meta:
         #model = Oos
@@ -67,7 +66,6 @@ class OosForm(forms.ModelForm):
             'client': forms.HiddenInput()
             }
         
-
 
 class SearchForm(forms.ModelForm):
     class Meta:

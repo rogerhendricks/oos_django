@@ -1,37 +1,146 @@
 {% extends "clients/base.html" %}
 
 {% block content %}
-        
+{% load static %}
+        <script src="{% static 'js/chart.min.js' %}"></script>
         <h4>Services Index for {{client.first_name}} {{client.last_name}}</h4>
         <div>
                 <div>
                         <a class="btn btn-secondary" href="{% url 'client:client_detail' client.id %}">Back to Client</a>
                         <a class="btn btn-secondary" href="{% url 'client:service_new' client.id %}">New Service</a>
                         <a class="btn btn-secondary" href="{% url 'client:procedure_add' client.id %}">New Procedure</a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dataModal">Launch data</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Launch History</button>
                         <button type="button" class = 'btn btn-primary' data-toggle="modal" data-target="#importDataModal">Import File</button>
                 </div>
         </div>
-        <!-- Modal dialog for data info-->
-        <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="deviceData" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="dataModalLabel">Trend Data for {{client.first_name}} {{client.last_name}}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        {% include "clients/device_info.html" %}
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
+
+        <div class="container">
+                <div class="row">
+                        <div class="col">
+                        <canvas id="battery" width="350" height="150"></canvas>
+                        <script>
+                                var ctx = document.getElementById("battery").getContext('2d');
+                                var battery = new Chart(ctx, {
+                                        type: 'horizontalBar',
+                                        data: {
+                                        labels: ["Red",],
+                                        datasets: [{
+                                                label: 'Battery',
+                                                data: [12],
+                                                backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                
+                                                ],
+                                                borderColor: [
+                                                'rgba(255,99,132,1)',
+                                                ],
+                                                borderWidth: 1
+                                        }]
+                                        },
+                                        options: {
+                                        responsive: false,
+                                        maintainAspectRatio: false,
+                                        scales: {
+                                                yAxes: [{
+                                                ticks: {
+                                                        beginAtZero:true
+                                                }
+                                                }]
+                                        }
+                                        }
+                                });
+                        </script>
+                        </div>
+                        <div class="col">
+                                <canvas id="impedance" width="350" height="150"></canvas>
+                        <script>
+                                var ctx = document.getElementById("impedance").getContext('2d');
+                                var impedance = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                        labels: [1, 6, 12],
+                                        datasets: [{
+                                                label: 'RV',
+                                                data: [{
+                                                x: 0,
+                                                y: 80
+                                                }, {
+                                                x: 0,
+                                                y: 10
+                                                },
+                                                {
+                                                x: 0,
+                                                y: 38
+                                                }],
+                                                
+                                                borderColor: [
+                                                'rgba(255,99,132,1)',
+                                                ],
+                                                borderWidth: 1,
+                                                fill: false
+                                        },
+                                        {
+                                                label: 'LV',
+                                                data: [{
+                                                x: 9,
+                                                y: 25
+                                                }, {
+                                                x: 20,
+                                                y: 30
+                                                },
+                                                {
+                                                x: 26,
+                                                y: 35
+                                                }],
+                                                
+                                                borderColor: [
+                                                'rgb(63, 191, 63)',
+                                                ],
+                                                borderWidth: 1,
+                                                fill: false
+                                        } 
+                                        ]
+                                        },
+                                        options: {
+                                        
+                                        responsive: false,
+                                        maintainAspectRatio: false,
+                                        scales: {
+                                                yAxes: [{
+                                                stacked: true
+                                                }]
+                                        }
+                                        }
+                                });
+                        </script>
+                        </div>
+                        <div class="col">
+                                Column "Maybe Arrythmias"
+                        </div>
                 </div>
-        </div>
-        <!-- Modal dialog for data info-->
+                </div>
+
+
+        <!-- Modal dialog for history info-->
+        <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyData" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="historyModalLabel"> History for {{client.first_name}} {{client.last_name}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                {% include "clients/history.html" %}
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+                <!-- Modal dialog for history info-->
 
         <!-- Modal dialog for import data-->
         <div class="modal fade" id="importDataModal" tabindex="-1" role="dialog" aria-labelledby="deviceData" aria-hidden="true">

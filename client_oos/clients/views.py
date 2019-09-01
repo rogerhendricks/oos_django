@@ -98,9 +98,9 @@ class OosView(SingleObjectMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset1 = self.object.oos_set.all()
-        queryset2 = self.object.procedure_set.all()
-        queryset = list (chain(queryset1, queryset2))
+        queryset = self.object.oos_set.all()
+        #queryset2 = self.object.procedure_set.all()
+        #queryset = list (chain(queryset1, queryset2))
         return queryset
 
 class OosDetailView(DetailView):

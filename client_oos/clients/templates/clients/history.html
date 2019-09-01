@@ -1,0 +1,35 @@
+{% load static %}
+<head>
+    <script src="{% static 'js/chart.min.js' %}"></script>
+    </head>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <canvas id="history" width="700" height="150"></canvas>
+                <script>
+                        var ctx = document.getElementById("history").getContext('2d');
+                        var history = new Chart(ctx, {
+                                type: 'line',
+                                data: [{
+                                    x: 10,
+                                    y: 20
+                                }, {
+                                    x: 15,
+                                    y: 10
+                                }],
+                                options: {
+                                        scales: {
+                                            yAxes: [{
+                                                stacked: true
+                                            }]
+                                        }
+                                    }
+                            });
+                </script>
+             </div>
+             <div class="col">
+                 Column "Maybe Arrythmias"
+             </div>
+        </div>
+    </div>
+    

@@ -60,3 +60,66 @@
 				</div>
 			</div>
   </div>
+
+
+
+
+
+  
+
+  {% for service in object_list %}
+  {% if oos_type in service %}
+  <div class="card">
+          <h4 class="card-header">{{service.oos_type}}</h4>
+          <div class="card-body">
+                  <div class="row">
+                          <div class="col">
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Service Date: </label> {{service.oos_date}} <br>
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Content: </label> {{service.content}} <br>
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service.batt_volt}}<br>
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Battery Voltage: </label> {{service}}<br>
+                          </div>
+                  </div>
+                  <div class="row">
+                          <div class="col">
+                          <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a>
+                          </div>
+                  </div>
+          </div>
+  </div>
+  {% elif 'Diagnostic' in service.procedure_type %}
+  <div class="card">
+          <h4 class="card-header">{{service.procedure_type}}</h4>
+          <div class="card-body">
+                  <div class="row">
+                          <div class="col">
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Procedure Date: </label> {{service.procedure_date}} <br>
+                                  <label style="color: #7B1FA2; font-weight: bold;"> Procedure Comments:  </label> {{service.content}} <br>
+                          </div>
+                  </div>
+                  <div class="row">
+                          <div class="col">
+                              <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a>
+                          </div>
+                  </div>
+          </div>
+  </div>
+  {% else %}
+  <div class="card">
+                  <h4 class="card-header"> No Device or Procedure Information Found</h4>
+                  <div class="card-body">
+                          <div class="row">
+                                  <div class="col">
+                                          Please create an new check or procedure for this patient.
+                                  </div>
+                          </div>
+                          <div class="row">
+                                  <div class="col">
+                                      <a class="btn btn-secondary" href="{% url 'client:service_detail' service.pk %}">Details</a>
+                                  </div>
+                          </div>
+                  </div>
+          </div>
+  {% endif %}
+
+{% endfor %}
