@@ -121,6 +121,7 @@ class Oos(db.Model):
 
 
 class Procedure(db.Model):
+    __tablename__ = "procedure"
 
     procedure_type_choices = (
         ('Ischaemic VT Ablation', 'Ischaemic VT Ablation'),
@@ -141,7 +142,7 @@ class Procedure(db.Model):
         ordering = ('-procedure_date',)
 
     def get_absolute_url(self):
-        return reverse('client:detail', kwargs={"pk": self.pk})
+        return reverse('client:procedure_detail', kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.procedure_type

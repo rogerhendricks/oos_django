@@ -8,7 +8,6 @@
                 <div>
                         <a class="btn btn-secondary" href="{% url 'client:client_detail' client.id %}">Back to Client</a>
                         <a class="btn btn-secondary" href="{% url 'client:service_new' client.id %}">New Service</a>
-                        <a class="btn btn-secondary" href="{% url 'client:procedure_add' client.id %}">New Procedure</a>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Launch History</button>
                         <button type="button" class = 'btn btn-primary' data-toggle="modal" data-target="#importDataModal">Import File</button>
                 </div>

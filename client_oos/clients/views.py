@@ -47,7 +47,6 @@ class ClientDetailView(DetailView, DeleteView, CreateView, externalTest):
     form_class = ClientForm
    
     
-
 class ClientCreate(CreateView):
     model = Client
     form_class = ClientForm
@@ -103,6 +102,7 @@ class OosView(SingleObjectMixin, ListView):
         #queryset = list (chain(queryset1, queryset2))
         return queryset
 
+
 class OosDetailView(DetailView):
     template_name = 'clients/oos_detail.html'
 
@@ -156,6 +156,7 @@ class GeneratePdf(View):
             return response
         return HttpResponse("Error Rendering PDF", status=400)
 
+
 class PrintPdf(View):
     def get(self, request, *args, **kwargs):
         queryset = Oos.objects.filter(id=self.kwargs.get('pk')).select_related('client').prefetch_related(
@@ -201,7 +202,51 @@ class procedureCreate(CreateView):
         initial['client'] = self.kwargs.get('pk')
         return initial
 
+
+class ProcedureView(SingleObjectMixin, ListView):
+    #model = Procedure
+    template_name = 'clients/procedures/procedure.html'
+    #success_url = reverse_lazy('client:index')
+    #form_class = ClientForm
+    context_object_name = 'all_procedures'
+    paginate_by = 10
+    #form_class = ProcedureForm
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Client.objects.all())
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super().get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['client'] = self.object
+        return context
+
+    def get_queryset(self):
+        queryset = self.object.procedure_set.all()
+        #queryset2 = self.object.procedure_set.all()
+        #queryset = list (chain(queryset1, queryset2))
+        return queryset
+
+
+class ProcedureDetailView(DetailView):
+    template_name = 'clients/procedures/procedure_detail.html'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Procedure.objects.filter(id=self.kwargs.get('pk')).prefetch_related('client')
+        return queryset
+
+
+class ProcedureDeleteView(DeleteView):
+    model = Procedure
+    success_url = reverse_lazy('client:index')
+
+
+
+
+
 # Doctors
+
 
 class DoctorCreate(CreateView):
     #model = Doc

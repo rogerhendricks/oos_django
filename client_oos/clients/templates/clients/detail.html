@@ -38,7 +38,8 @@
 	<hr>
 </div>
 <div>
-	<a class="btn btn-secondary" href="{% url 'client:service' client.pk %}">Services</a>
+  <a class="btn btn-secondary" href="{% url 'client:service' client.pk %}">Services</a>
+  <a class="btn btn-secondary" href="{% url 'client:procedure' client.pk %}">Procedures</a>
 	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateModal">Update</button>
 	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
 </div>

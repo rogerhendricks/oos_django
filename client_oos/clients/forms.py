@@ -63,7 +63,8 @@ class OosForm(forms.ModelForm):
             'content': 'Comments',
             }
         widgets = {
-            'client': forms.HiddenInput()
+            'client': forms.HiddenInput(),
+            'oos_date': forms.DateInput(attrs={'class': 'datepicker', 'type':'date'})
             }
         
 

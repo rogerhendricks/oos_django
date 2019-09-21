@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
-from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosCreateNew, DoctorCreate, DoctorView, DoctorDetailView, DoctorDelete, DoctorUpdate, DoctorSearchList, importDataView, PrintPdf, procedureCreate
+from clients.views import ClientView, ClientDetailView, ClientCreate, ClientDelete, ClientUpdate, SearchList, OosView, OosDetailView, OosCreate, OosUpdateView, OosDelete, GeneratePdf, OosCreateNew, DoctorCreate, DoctorView, DoctorDetailView, DoctorDelete, DoctorUpdate, DoctorSearchList, importDataView, PrintPdf, procedureCreate, ProcedureView, ProcedureDetailView, ProcedureDeleteView
 from django.conf import settings
 
 
@@ -31,7 +31,12 @@ urlpatterns = [
     path('client/<int:pk>/service/importdata', importDataView.as_view()),
 
     # /procedures
+    path('client/<int:pk>/procedure', ProcedureView.as_view(), name='procedure'),
+    path('client/<int:client.pk>/procedure/<int:pk>/detail', ProcedureDetailView.as_view(), name='procedure_detail'),
     path('client/<int:pk>/procedure/add', procedureCreate.as_view(), name='procedure_add'),
+    path('client/<int:pk>/procedure/<int:procedure.pk>/delete', ProcedureDeleteView.as_view(), name='procedure_delete'),
+
+
     # /doctors
     path('doctor/new/',DoctorCreate.as_view() , name='doctor_new'),
     path('doctor/list', DoctorView.as_view(), name='doctor_index'),

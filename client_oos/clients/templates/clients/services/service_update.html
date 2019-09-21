@@ -1,5 +1,4 @@
 {% extends 'clients/base.html' %}
-
 {% load crispy_forms_tags %}
 {% block content %}
 <h1>Update Service</h1>
@@ -8,8 +7,8 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#batt_details" role="tab" aria-controls="nav-home" aria-selected="true">Battery Details</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#measurements" role="tab" aria-controls="nav-profile" aria-selected="false">Device Meaurements</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#RV_details" role="tab" aria-controls="nav-contact" aria-selected="false">Comments</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#measurements" role="tab" aria-controls="nav-profile" aria-selected="false">Right Atrium</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#RV_details" role="tab" aria-controls="nav-contact" aria-selected="false">Right Ventricle</a>
         </div>
     </nav>
 
@@ -24,6 +23,7 @@
           {{ form.paced_percent_lv|as_crispy_field }}
           {{ form.batt_volt|as_crispy_field }}
           {{ form.batt_chg_time|as_crispy_field }}
+          {{ form.content|as_crispy_field }}
         </div>
       </div>
 
@@ -61,3 +61,14 @@
     </form>
     </div>
     {% endblock %}
+
+
+
+    {% block content %}
+    <h1>Update service</h1>
+    <form method="POST" class="update-form" enctype="multipart/form-data">
+        {% csrf_token %}
+            {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Update service</button>
+    </form>
+{% endblock %}
