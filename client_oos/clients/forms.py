@@ -64,7 +64,7 @@ class OosForm(forms.ModelForm):
             }
         widgets = {
             'client': forms.HiddenInput(),
-            'oos_date': forms.DateInput(attrs={'class': 'datepicker', 'type':'date'})
+            'oos_date': forms.DateTimeInput(attrs={'class': 'datepicker', 'type':'date'})
             }
         
 
@@ -103,3 +103,4 @@ class ProcedureForm(forms.ModelForm):
         widgets = {
             'client': forms.HiddenInput()
             }
+            

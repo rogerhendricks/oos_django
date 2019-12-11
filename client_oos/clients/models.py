@@ -44,7 +44,6 @@ class Doc(db.Model):
         return '%s %s %s' % ( self.doc_type, self.first_name, self.last_name )
 
 
-
 class Client(db.Model):
     __tablename__= "clients" # table name
 
